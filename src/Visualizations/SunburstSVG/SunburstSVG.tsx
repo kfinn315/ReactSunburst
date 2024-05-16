@@ -54,7 +54,7 @@ export default function SunburstSVG(props: Props): JSX.Element {
   function getSunburstViewHierarchy() {
     const treeNodes = getTreeNodes(data, getSegments);
 
-    const hierarchyNodes: HierarchyRectangularNode<SunburstViewItemTN>[] = getHierarchyNodes({ dimensions: layoutDimensions, items: treeNodes, partitionLayout: new SunburstViewItemPartitionLayout() });
+    const hierarchyNodes: HierarchyRectangularNode<SunburstViewItemTN>[] = getHierarchyNodes<SunburstViewItem>({ dimensions: layoutDimensions, items: treeNodes, partitionLayout: new SunburstViewItemPartitionLayout() });
     return hierarchyNodes;
   }
 

@@ -2,8 +2,9 @@ import './App.css'
 import SunburstSVG, { SunburstViewItemTN } from './Visualizations/SunburstSVG/SunburstSVG'
 import SunburstViewItem from "./Visualizations/Sunburst/Data/Models/SunburstViewItem";
 import SunburstDataDTO from "./Visualizations/Sunburst/Data/Models/SunburstDataDTO";
-import { max, min, scaleLinear, HierarchyRectangularNode } from 'd3';
+import { max, min, scaleLinear, HierarchyNode } from 'd3';
 import { useState } from 'react';
+import { SunburstEvent } from './Visualizations/Sunburst/Types';
 
 function App() {
   const [detail, setDetail] = useState<string | undefined>();
@@ -29,13 +30,13 @@ function App() {
     return item.name.split('.')
   }
 
-  function summarize(item: HierarchyRectangularNode<SunburstViewItemTN>): string {
+  function summarize(item: HierarchyNode<SunburstViewItemTN>): string {
     return item.ancestors().map(x => x.data?.name ?? "?").reverse().join('.')
   }
 
-  const mouseEnterHandler = (e: MouseEvent, d: HierarchyRectangularNode<SunburstViewItemTN>): void => { setDetail(summarize(d)); };
+  const mouseEnterHandler: SunburstEvent<SunburstViewItemTN> = (_: MouseEvent, d: HierarchyNode<SunburstViewItemTN>): void => { setDetail(summarize(d)); };
 
-  const mouseLeaveHandler = () => { setDetail(undefined); };
+  const mouseLeaveHandler: SunburstEvent<SunburstViewItemTN> = () => { setDetail(undefined); };
 
   return (<div>
     <h1>React Sunburst Demo</h1>

@@ -15,7 +15,7 @@ export default class TreeGenerator {
     }
 
     private createTreeNode<D>(name: string, data: D | undefined, children: TreeNode<D>[] = []): TreeNode<D> {
-        return { ...data, name, children };
+        return { ...data, name, children } as TreeNode<D> ;
     }
 
     private addNodeToTree<D>(treeNode: TreeNode<D>, segments: IterableIterator<string>, data: D): TreeNode<D> {

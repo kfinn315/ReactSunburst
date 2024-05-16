@@ -21,6 +21,10 @@ export default class SunburstView<T extends SunburstViewItem> {
   private readonly getArcColor = (d: HierarchyRectangularNode<T>) => d.data?.arcColor ?? this.props.centerColor;
 
   initialize(modules: Array<HierarchyRectangularNode<T>> = []): void {
+    if (this.ref.current == null) {
+      return;
+    }
+    
     const selection = select<SVGGElement, HierarchyRectangularNode<T>>(this.ref.current);
 
     const arcGroup = selection.select('.arc');

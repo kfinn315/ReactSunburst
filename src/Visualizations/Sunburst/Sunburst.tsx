@@ -53,21 +53,21 @@ export default function Sunburst<T extends SunburstViewItem>(props: SunburstProp
   const gElementRef = useRef<SVGGElement | null>(null);
   const arcCollection = getArcGenerators(radius);
 
-  const highlighter = getHighlighter(gElementRef);
+  const highlighter = getHighlighter<T>(gElementRef);
 
   const view = useMemo(() => {
 
-    function mouseEnterHandler(event: MouseEvent, d: HierarchyRectangularNode<T>): void {
+    function mouseEnterHandler(event: MouseEvent, d: HierarchyNode<T>): void {
       highlighter.highlightItem(d);
       mouseEnterEvent?.(event, d);
     }
 
-    function mouseLeaveHandler(event: MouseEvent, d: HierarchyRectangularNode<T>): void {
+    function mouseLeaveHandler(event: MouseEvent, d: HierarchyNode<T>): void {
       highlighter.unhighlightAllItems();
       mouseLeaveEvent?.(event, d);
     }
 
-    function clickEventHandler(event: MouseEvent, d: HierarchyRectangularNode<T>): void {
+    function clickEventHandler(event: MouseEvent, d: HierarchyNode<T>): void {
       if (d?.data?.clickable) {
         clickEvent?.(event, d);
       } else {
