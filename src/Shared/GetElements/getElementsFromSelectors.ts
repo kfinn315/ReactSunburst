@@ -15,11 +15,11 @@ export default function getElementsFromSelectors<T, B extends Element = Element,
   getSelector: (item?: T) => string
 ): IGetElements<T, E> {
 
-  function getElementForItem(item: T): E | null {
-    if (item == null) {
-      return null;
+  function getElementForItem(item: T): E | undefined {
+    if (item == undefined) {
+      return undefined;
     }
-    return ref.current?.querySelector<E>(getSelector(item)) ?? null;
+    return ref.current?.querySelector<E>(getSelector(item)) ?? undefined;
   }
 
   function getAll(): E[] {
