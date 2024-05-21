@@ -1,3 +1,5 @@
-# React Sunburst Demo
+# React Sunburst
 
-This is the React Sunburst Demo
+A sunburst chart created with ReactJS, Typescript and D3js. 
+
+Demo https://kfinn315.github.io/ReactSunburst
