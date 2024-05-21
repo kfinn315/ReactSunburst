@@ -1,10 +1,11 @@
 import './App.css'
-import SunburstSVG, { SunburstViewItemTN } from './Visualizations/SunburstSVG/SunburstSVG'
-import SunburstViewItem from "./Visualizations/Sunburst/Data/Models/SunburstViewItem";
-import SunburstDataDTO from "./Visualizations/Sunburst/Data/Models/SunburstDataDTO";
+import SunburstSVG from './Components/SunburstSVG/SunburstSVG'
+import SunburstViewItemTN from './Components/SunburstSVG/SunburstViewItemTN';
+import SunburstViewItem from "./Models/SunburstViewItem";
+import SunburstDataDTO from "./Models/SunburstDataDTO";
 import { max, min, scaleLinear, HierarchyNode } from 'd3';
 import { useState } from 'react';
-import { SunburstEvent } from './Visualizations/Sunburst/Types';
+import SunburstEvent from './Components/Sunburst/SunburstEvent';
 
 function App() {
   const [detail, setDetail] = useState<string | undefined>();
@@ -40,15 +41,17 @@ function App() {
 
   return (<div>
     <h1>React Sunburst Demo</h1>
-    <div>
-      <h2>Data</h2>
-      <data>
-        {JSON.stringify(data)}
-      </data>
-    </div>
     <div className='content'>
-      <label style={{ width: "100%", maxHeight: "200px" }}>{detail}</label>
-      <SunburstSVG radius={200} data={convertedData} centerColor='blue' getSegments={getSegments} mouseEnterEvent={mouseEnterHandler} mouseLeaveEvent={mouseLeaveHandler} />
+      <div className='data'>
+        <h2>Data</h2>
+        <data>
+          {JSON.stringify(data)}
+        </data>
+      </div>
+      <div className='sunburst-content'>
+        <SunburstSVG radius={200} data={convertedData} centerColor='blue' getSegments={getSegments} mouseEnterEvent={mouseEnterHandler} mouseLeaveEvent={mouseLeaveHandler} />
+        <label>{detail}</label>
+      </div>
     </div>
   </div>
   )

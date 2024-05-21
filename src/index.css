@@ -71,21 +71,3 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
-
-g.arc path {
-  opacity: 0.5
-}
-
-g.arc path.highlight {
-  opacity: 1
-}
-
-.content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.content>label {
-  height: 20px;
-}
