@@ -1,4 +1,4 @@
-import { CollectionClassModifier, ICollectionClassModifier } from "../../Shared/CSSClassModifier/CollectionClassModifier";
+import CollectionClassModifier, { ICollectionClassModifier } from "../../Shared/CSSClassModifier/CollectionClassModifier";
 
 export default class Highlighter extends CollectionClassModifier implements ICollectionClassModifier {
     constructor() {

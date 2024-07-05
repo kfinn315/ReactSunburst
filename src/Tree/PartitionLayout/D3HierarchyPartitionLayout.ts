@@ -1,7 +1,7 @@
 import { hierarchy, HierarchyNode, HierarchyRectangularNode, partition, PartitionLayout } from 'd3';
-import TreeNode from '../Models/TreeNode';
-import UndefinedArgumentError from '../../../Shared/UndefinedArgumentError';
-import Dimensions from '../../../Shared/Dimensions';
+import { TreeNode } from '../Types';
+import UndefinedArgumentError from '../../Shared/UndefinedArgumentError';
+import Dimensions from '../../Shared/Dimensions';
 import IPartitionLayout from './IPartitionLayout';
 
 export default class D3HierarchyPartitionLayout<T> implements IPartitionLayout<T> {

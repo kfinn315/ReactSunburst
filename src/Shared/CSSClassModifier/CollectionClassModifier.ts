@@ -5,7 +5,7 @@ export interface ICollectionClassModifier {
     add: (elements: Element[]) => void
 }
 
-export class CollectionClassModifier implements ICollectionClassModifier {
+export default class CollectionClassModifier implements ICollectionClassModifier {
     private readonly classModifer: CssClassModifier;
 
     constructor(className: string) {

@@ -1,5 +1,9 @@
 import { MutableRefObject } from 'react';
-import IGetElements from './IGetElements';
+
+export interface IElementProvider<T, E extends Element = Element> {
+  forItem: (item: T) => E | undefined;
+  getAll: () => E[];
+}
 
 /**
  * @param T type of input item
@@ -10,10 +14,10 @@ import IGetElements from './IGetElements';
  * @param allSelector 
  * @returns 
  */
-export default function getElementsFromSelectors<T, B extends Element = Element, E extends Element = Element>(
+export default function ElementProvider<T, B extends Element = Element, E extends Element = Element>(
   ref: MutableRefObject<B | null>,
   getSelector: (item?: T) => string
-): IGetElements<T, E> {
+): IElementProvider<T, E> {
 
   function getElementForItem(item: T): E | undefined {
     if (item == undefined) {

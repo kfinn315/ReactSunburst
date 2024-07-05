@@ -1,48 +1,29 @@
-import { HierarchyRectangularNode } from 'd3';
+import { HierarchyRectangularNode, ScaleLinear } from 'd3';
 import Sunburst from '../Sunburst/Sunburst';
 import SunburstEvent from '../Sunburst/SunburstEvent';
-import getHierarchyNodes from '../Tree/getHierarchyNodes';
-import SunburstViewItem from "../../Models/SunburstViewItem";
-import SunburstViewItemPartitionLayout from './SunburstViewItemPartitionLayout';
-import Dimensions from '../../Shared/Dimensions';
-import SunburstViewItemTN from './SunburstViewItemTN';
-import getTreeNodes from './getTreeNodes';
+import { SunburstItem } from "../Types";
+import SunburstItemTreeNode from './SunburstItemTreeNode';
+import { TreeNode } from '../../Tree/Types';
 
 export interface Props {
-  radius: number
-  data: SunburstViewItem[]
+  nodes: HierarchyRectangularNode<TreeNode<SunburstItem>>[]
   duration?: number
   centerColor?: string
-  clickEvent?: SunburstEvent<SunburstViewItemTN>
-  mouseEnterEvent?: SunburstEvent<SunburstViewItemTN>
-  mouseLeaveEvent?: SunburstEvent<SunburstViewItemTN>
+  clickEvent?: SunburstEvent<SunburstItemTreeNode>
+  mouseEnterEvent?: SunburstEvent<SunburstItemTreeNode>
+  mouseLeaveEvent?: SunburstEvent<SunburstItemTreeNode>
   centerElement?: JSX.Element
-  getSegments: (item: SunburstViewItem) => string[]
-}
-
-function getCanvasDimensions(radius: number): Dimensions {
-  return {
-    width: 2 * Math.PI,
-    height: radius * radius
-  };
+  colorScale: ScaleLinear<string, string, never>
+  width: number
+  height: number
+  radius: number //Sunburst radius size (in pixels)
 }
 
 export default function SunburstSVG(props: Props): JSX.Element {
-  const { data, radius, getSegments, centerColor, centerElement, clickEvent, duration, mouseEnterEvent, mouseLeaveEvent
+  const { nodes, width, height, radius, centerColor, centerElement, clickEvent, duration, mouseEnterEvent, mouseLeaveEvent, colorScale
   } = props;
 
-  const layoutDimensions = getCanvasDimensions(radius);
-
-  function getSunburstViewHierarchy() {
-    const treeNodes = getTreeNodes(data, getSegments);
-
-    const hierarchyNodes: HierarchyRectangularNode<SunburstViewItemTN>[] = getHierarchyNodes<SunburstViewItem>({ dimensions: layoutDimensions, items: treeNodes, partitionLayout: new SunburstViewItemPartitionLayout() });
-    return hierarchyNodes;
-  }
-
-  const hierarchyNodes: HierarchyRectangularNode<SunburstViewItemTN>[] = getSunburstViewHierarchy();
-
-  return <svg width={radius * 2} height={radius * 2}>
-    <Sunburst<SunburstViewItemTN> radius={radius} data={hierarchyNodes} centerColor={centerColor} centerElement={centerElement} clickEvent={clickEvent} duration={duration} mouseEnterEvent={mouseEnterEvent} mouseLeaveEvent={mouseLeaveEvent} />
+  return <svg width={width} height={height}>
+    <Sunburst<SunburstItem> colorScale={colorScale} radius={radius} items={nodes} centerColor={centerColor} centerElement={centerElement} clickEvent={clickEvent} duration={duration} mouseEnterEvent={mouseEnterEvent} mouseLeaveEvent={mouseLeaveEvent} />
   </svg>;
 }
