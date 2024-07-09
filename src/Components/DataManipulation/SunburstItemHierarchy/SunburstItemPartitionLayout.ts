@@ -1,7 +1,6 @@
 import { HierarchyNode } from 'd3';
 import D3HierarchyPartitionLayout from '../../../PartitionLayout/D3HierarchyPartitionLayout';
-import { SunburstItem } from '../../Types';
-import SunburstItemTreeNode from './SunburstItemTreeNode';
+import { SunburstItem, SunburstItemTreeNode } from '../../Types';
 
 export default class SunburstItemPartitionLayout extends D3HierarchyPartitionLayout<SunburstItem> {
   constructor() {

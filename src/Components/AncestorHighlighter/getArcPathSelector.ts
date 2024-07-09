@@ -5,11 +5,8 @@ export default function getArcPathSelector<T extends { id: unknown }>(item?: Tre
   if (item === undefined) { //select all paths
     selector = '.arc>path';
   }
-  else if (item.name === "root") {
-    selector = `.arc>path[data-name="root"]`;
-  }
-  else if (item.data !== undefined) {
-    selector = `.arc>path[data-id="${item.data.id}"]`;
+  else if (item.id !== undefined) {
+    selector = `.arc>path[data-id="${item.id}"]`;
   }
   else selector = "";
 

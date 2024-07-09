@@ -1,7 +1,7 @@
 import { MutableRefObject } from 'react';
 
 export interface IElementProvider<T, E extends Element = Element> {
-  forItem: (item: T) => E | undefined;
+  forItem: (item: T) => E | null;
   getAll: () => E[];
 }
 
@@ -19,15 +19,15 @@ export default function ElementProvider<T, B extends Element = Element, E extend
   getSelector: (item?: T) => string
 ): IElementProvider<T, E> {
 
-  function getElementForItem(item: T): E | undefined {
+  function getElementForItem(item: T): E | null {
     if (item == undefined) {
-      return undefined;
+      return null;
     }
     const selector = getSelector(item)
     if (selector === "") {
-      return undefined;
+      return null;
     }
-    return ref.current?.querySelector<E>(selector);
+    return ref.current?.querySelector<E>(selector) ?? null;
   }
 
   function getAll(): E[] {

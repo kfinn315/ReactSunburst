@@ -1,9 +1,8 @@
-import { HierarchyRectangularNode, ScaleLinear, select } from 'd3';
+import { HierarchyRectangularNode, select } from 'd3';
 import { MutableRefObject } from 'react';
 import SunburstEvent from './SunburstEvent';
-import { SunburstItem } from "../Types";
-import { TreeNode } from '../../Tree/Types';
 import { ArcCollection } from '../Arcs/Types';
+import { TreeNode } from '../../Tree/Types';
 
 export interface SunburstViewProps<T> {
   duration: number
@@ -12,16 +11,15 @@ export interface SunburstViewProps<T> {
   mouseLeaveEvent: SunburstEvent<T>
   clickEvent: SunburstEvent<T>
   centerColor: string
-  colorScale: ScaleLinear<string, string, never>
+  getArcColor: (d: HierarchyRectangularNode<T>) => string
+  arcIsClickable: (d: HierarchyRectangularNode<T>) => boolean
 }
 
-export default class SunburstView<T extends TreeNode<SunburstItem>> {
+export default class SunburstController<T extends TreeNode<unknown>> {
   constructor(private readonly ref: MutableRefObject<SVGGElement | null>, private readonly props: SunburstViewProps<T>) { }
-
-  private readonly getID = (d: HierarchyRectangularNode<T>) => d.data.data?.id ?? -1;
-  private readonly getName = (d: HierarchyRectangularNode<T>) => d.data.name;
-  private readonly getArcColor = (d: HierarchyRectangularNode<T>) => d.data.data?.color ? this.props.colorScale(d.data.data.color) : this.props.centerColor;
-
+  #getID(d: HierarchyRectangularNode<T>) {
+    return d.data.id;
+  }
   initialize(items: Array<HierarchyRectangularNode<T>> = []): void {
 
     if (this.ref.current == null) {
@@ -33,7 +31,7 @@ export default class SunburstView<T extends TreeNode<SunburstItem>> {
     const createArcs = () => {
       const arcGroup = selection.select('.arc');
 
-      const arcs = arcGroup.selectAll<SVGPathElement, HierarchyRectangularNode<T>>('path').data(items, this.getID);
+      const arcs = arcGroup.selectAll<SVGPathElement, HierarchyRectangularNode<T>>('path').data(items, this.#getID);
 
       const arcsEnter = arcs.enter().append('path');
 
@@ -41,10 +39,9 @@ export default class SunburstView<T extends TreeNode<SunburstItem>> {
         .merge(arcs)
         .transition()
         .duration(this.props.duration)
-        .attr('fill', this.getArcColor)
+        .attr('fill', this.props.getArcColor)
         .attr('d', this.props.arcCollection.main)
-        .attr('data-name', this.getName)
-        .attr('data-id', this.getID);
+        .attr('data-id', this.#getID);
 
       arcs.exit().remove();
     }
@@ -58,13 +55,13 @@ export default class SunburstView<T extends TreeNode<SunburstItem>> {
       // .on('mouseleave', mouseleaveEvent)
       const mousearcs = mouseGroup
         .selectAll<SVGPathElement, HierarchyRectangularNode<T>>('path')
-        .data(items, this.getID);
+        .data(items, this.#getID);
 
       const mousearcsEnter = mousearcs
         .enter()
         .append('path')
-        .attr('class', (d) => (d.data.data?.clickable ? 'clickable' : null))
-        .attr('data-name', this.getName);
+        .attr('class', (d) => (this.props.arcIsClickable(d) ? 'clickable' : null))
+        .attr('data-id', this.#getID);
 
       mousearcsEnter
         .on('mouseenter', (ev: MouseEvent, d) => {

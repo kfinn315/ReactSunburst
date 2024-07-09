@@ -1,3 +1,4 @@
+import { TreeNode } from "../Tree/Types";
 
 export interface SunburstItem {
     id: number;
@@ -14,3 +15,5 @@ export type MyNode<T> = T & {
 export interface SunburstItemNode extends SunburstItem, MyNode<SunburstItem> {
     children?: SunburstItemNode[]
 }
+
+export type SunburstItemTreeNode = TreeNode<SunburstItem>;

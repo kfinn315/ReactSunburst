@@ -1,11 +1,10 @@
 import './Sunburst.css';
 
 import { useLayoutEffect, useMemo, useRef } from 'react';
-import SunburstView from './SunburstView';
-import { HierarchyNode, HierarchyRectangularNode, ScaleLinear } from 'd3';
+import SunburstController from './SunburstController';
+import { HierarchyNode, HierarchyRectangularNode } from 'd3';
 import SunburstEvent from './SunburstEvent';
 import { ArcGroup } from '../Arcs/getArcCollection';
-import { SunburstItem } from "../Types";
 import { IAncestorHighlighter } from '../AncestorHighlighter/AncestorHighlighter';
 import { TreeNode } from '../../Tree/Types';
 import { GetHighlighterMethod } from "../AncestorHighlighter/GetHighlighterMethod";
@@ -20,11 +19,12 @@ export interface SunburstProps<T> {
   mouseEnterEvent?: SunburstEvent<TreeNode<T>>
   mouseLeaveEvent?: SunburstEvent<TreeNode<T>>
   centerElement?: JSX.Element
-  colorScale: ScaleLinear<string, string, never>
   getHighlighter?: GetHighlighterMethod<T>
+  getArcColor: (d: HierarchyRectangularNode<TreeNode<T>>) => string
+  arcIsClickable: (d: HierarchyRectangularNode<TreeNode<T>>) => boolean
 }
 
-export default function Sunburst<T extends SunburstItem>(props: SunburstProps<T>): JSX.Element {
+export default function Sunburst<T>(props: SunburstProps<T>): JSX.Element {
   const {
     id,
     centerColor = 'white',
@@ -35,8 +35,9 @@ export default function Sunburst<T extends SunburstItem>(props: SunburstProps<T>
     mouseEnterEvent,
     mouseLeaveEvent,
     centerElement,
-    colorScale,
-    getHighlighter
+    getHighlighter,
+    getArcColor,
+    arcIsClickable
   } = props;
 
   const gElementRef = useRef<SVGGElement | null>(null);
@@ -44,7 +45,7 @@ export default function Sunburst<T extends SunburstItem>(props: SunburstProps<T>
 
   const highlighter: IAncestorHighlighter<HierarchyNode<TreeNode<T>>> | undefined = getHighlighter?.(gElementRef);
 
-  const view = useMemo(() => {
+  const controller = useMemo(() => {
 
     function mouseEnterHandler(event: MouseEvent, d: HierarchyNode<TreeNode<T>>): void {
       highlighter?.highlight(d);
@@ -57,14 +58,10 @@ export default function Sunburst<T extends SunburstItem>(props: SunburstProps<T>
     }
 
     function clickEventHandler(event: MouseEvent, d: HierarchyNode<TreeNode<T>>): void {
-      if (d?.data?.data?.clickable) {
-        clickEvent?.(event, d);
-      } else {
-        console.info("sunburst click event was stopped")
-      }
+      clickEvent?.(event, d);
     }
 
-    return new SunburstView<TreeNode<T>>(gElementRef,
+    return new SunburstController<TreeNode<T>>(gElementRef,
       {
         centerColor,
         duration,
@@ -72,13 +69,14 @@ export default function Sunburst<T extends SunburstItem>(props: SunburstProps<T>
         clickEvent: clickEventHandler,
         mouseEnterEvent: mouseEnterHandler,
         mouseLeaveEvent: mouseLeaveHandler,
-        colorScale
+        getArcColor,
+        arcIsClickable
       })
   }, [arcCollection, centerColor, clickEvent, duration, highlighter, mouseEnterEvent, mouseLeaveEvent]);
 
   useLayoutEffect(() => {
-    view.initialize(items)
-  }, [items, view]);
+    controller.initialize(items)
+  }, [items, controller]);
 
   return (
     <g id={id} ref={gElementRef} className={'sb-element'} preserveAspectRatio="xMinYMin meet" transform={`translate(${radius},${radius})`}>

@@ -6,6 +6,7 @@ export interface SegmentNode<T> {
 };
 
 export type TreeNode<T> = {
+    id: number,
     name: string,
     children: TreeNode<T>[]
     data?: T
