@@ -1,9 +1,9 @@
 import { HierarchyRectangularNode, ScaleLinear, select } from 'd3';
 import { MutableRefObject } from 'react';
-import SunburstEvent from '../SunburstEvent';
-import ArcCollection from '../../ArcGenerator/ArcCollection';
-import { SunburstItem } from "../../Types";
-import { TreeNode } from '../../../Tree/Types';
+import SunburstEvent from './SunburstEvent';
+import { SunburstItem } from "../Types";
+import { TreeNode } from '../../Tree/Types';
+import { ArcCollection } from '../Arcs/Types';
 
 export interface SunburstViewProps<T> {
   duration: number

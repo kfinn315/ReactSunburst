@@ -1,9 +1,9 @@
 import { HierarchyNode } from 'd3';
-import D3HierarchyPartitionLayout from '../../Tree/PartitionLayout/D3HierarchyPartitionLayout';
+import D3HierarchyPartitionLayout from '../../../PartitionLayout/D3HierarchyPartitionLayout';
+import { SunburstItem } from '../../Types';
 import SunburstItemTreeNode from './SunburstItemTreeNode';
-import { SunburstItem } from '../Types';
 
-export default class SunburstViewItemPartitionLayout extends D3HierarchyPartitionLayout<SunburstItem> {
+export default class SunburstItemPartitionLayout extends D3HierarchyPartitionLayout<SunburstItem> {
   constructor() {
     super(getChildren, hierarchySumMethod, hierarchyNodeSort);
   }

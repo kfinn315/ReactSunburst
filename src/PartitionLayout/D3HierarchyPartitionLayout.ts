@@ -1,17 +1,17 @@
 import { hierarchy, HierarchyNode, HierarchyRectangularNode, partition, PartitionLayout } from 'd3';
-import { TreeNode } from '../Types';
-import UndefinedArgumentError from '../../Shared/UndefinedArgumentError';
-import Dimensions from '../../Shared/Dimensions';
-import IPartitionLayout from './IPartitionLayout';
+import { TreeNode } from '../Tree/Types';
+import UndefinedArgumentError from '../Shared/UndefinedArgumentError';
+import BoxDimensions from '../Shared/BoxDimensions';
+import MyPartitionLayout from './MyPartitionLayout';
 
-export default class D3HierarchyPartitionLayout<T> implements IPartitionLayout<T> {
+export default class D3HierarchyPartitionLayout<T> implements MyPartitionLayout<T> {
     constructor(
         private readonly getChildren: ((d: TreeNode<T>) => Iterable<TreeNode<T>> | null | undefined),
         private readonly getHierarchySum: (d: TreeNode<T>) => number,
         private readonly sortHierarchyNodes: (nodeA: HierarchyNode<TreeNode<T>>, nodeB: HierarchyNode<TreeNode<T>>) => number) {
     }
 
-    getLayout(root: TreeNode<T>, layoutSize: Dimensions): Array<HierarchyRectangularNode<TreeNode<T>>> {
+    getLayout(root: TreeNode<T>, layoutSize: BoxDimensions): Array<HierarchyRectangularNode<TreeNode<T>>> {
         if (root == null) {
             throw new UndefinedArgumentError('root')
         }
@@ -28,7 +28,7 @@ export default class D3HierarchyPartitionLayout<T> implements IPartitionLayout<T
         return hierarchy(treeNode, this.getChildren);
     }
 
-    private getPartition(layoutSize: Dimensions): PartitionLayout<TreeNode<T>> {
+    private getPartition(layoutSize: BoxDimensions): PartitionLayout<TreeNode<T>> {
         return partition<TreeNode<T>>().size([layoutSize.width, layoutSize.height]);
     }
 

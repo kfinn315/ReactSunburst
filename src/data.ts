@@ -1,6 +1,6 @@
 import { SunburstItem, SunburstItemNode } from "./Components/Types";
 
-export const data: SunburstItem[] = [
+export const sunburstItemData: SunburstItem[] = [
     { id: 0, name: '1', color: 0, size: 200 },
     { id: 1, name: '1.2', color: 515, size: 10 },
     { id: 2, name: '1.2.3', color: 250, size: 2 },

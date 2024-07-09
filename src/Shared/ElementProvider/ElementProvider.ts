@@ -23,7 +23,11 @@ export default function ElementProvider<T, B extends Element = Element, E extend
     if (item == undefined) {
       return undefined;
     }
-    return ref.current?.querySelector<E>(getSelector(item)) ?? undefined;
+    const selector = getSelector(item)
+    if (selector === "") {
+      return undefined;
+    }
+    return ref.current?.querySelector<E>(selector);
   }
 
   function getAll(): E[] {

@@ -2,7 +2,6 @@ import { SegmentNode, TreeNode } from './Types';
 
 type Segment<T> = {
     iterator: IterableIterator<string>;
-    // segment: string;
     name: string
     data: T
     done: boolean;

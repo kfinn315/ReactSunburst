@@ -1,16 +1,14 @@
 import './Sunburst.css';
 
 import { useLayoutEffect, useMemo, useRef } from 'react';
-
-import SunburstView from './SunburstView/SunburstView';
+import SunburstView from './SunburstView';
 import { HierarchyNode, HierarchyRectangularNode, ScaleLinear } from 'd3';
 import SunburstEvent from './SunburstEvent';
-import getArcGenerators from '../ArcGenerator/getArcGenerators';
+import { ArcGroup } from '../Arcs/getArcCollection';
 import { SunburstItem } from "../Types";
-import AncestorHighlighter from '../Highlighter/AncestorHighlighter';
-import ElementProvider from '../../Shared/ElementProvider/ElementProvider';
-// import SunburstItemTreeNode from '../SunburstSVG/SunburstItemTreeNode';
+import { IAncestorHighlighter } from '../AncestorHighlighter/AncestorHighlighter';
 import { TreeNode } from '../../Tree/Types';
+import { GetHighlighterMethod } from "../AncestorHighlighter/GetHighlighterMethod";
 
 export interface SunburstProps<T> {
   id?: string
@@ -23,6 +21,7 @@ export interface SunburstProps<T> {
   mouseLeaveEvent?: SunburstEvent<TreeNode<T>>
   centerElement?: JSX.Element
   colorScale: ScaleLinear<string, string, never>
+  getHighlighter?: GetHighlighterMethod<T>
 }
 
 export default function Sunburst<T extends SunburstItem>(props: SunburstProps<T>): JSX.Element {
@@ -37,32 +36,23 @@ export default function Sunburst<T extends SunburstItem>(props: SunburstProps<T>
     mouseLeaveEvent,
     centerElement,
     colorScale,
+    getHighlighter
   } = props;
 
   const gElementRef = useRef<SVGGElement | null>(null);
-  const arcCollection = getArcGenerators(radius);
+  const arcCollection = new ArcGroup(radius);
 
-  function getPathSelector(item?: TreeNode<SunburstItem>): string {
-    if (item == null) {
-      return '.arc>path';
-    }
-    else if (item.name === "root") {
-      return `.arc>path[data-name="${item.name}"]`;
-    }
-    return `.arc>path[data-id="${item.data?.id}"]`;
-  }
-  const elementProvider = ElementProvider<TreeNode<T>, SVGGElement, SVGPathElement>(gElementRef, getPathSelector);
-  const highlighter = AncestorHighlighter<TreeNode<T>>(elementProvider);
+  const highlighter: IAncestorHighlighter<HierarchyNode<TreeNode<T>>> | undefined = getHighlighter?.(gElementRef);
 
   const view = useMemo(() => {
 
     function mouseEnterHandler(event: MouseEvent, d: HierarchyNode<TreeNode<T>>): void {
-      highlighter.highlight(d);
+      highlighter?.highlight(d);
       mouseEnterEvent?.(event, d);
     }
 
     function mouseLeaveHandler(event: MouseEvent, d: HierarchyNode<TreeNode<T>>): void {
-      highlighter.reset();
+      highlighter?.clear();
       mouseLeaveEvent?.(event, d);
     }
 

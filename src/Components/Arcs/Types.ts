@@ -1,8 +1,15 @@
 import { Arc } from 'd3';
-import ArcCoordinates from './ArcCoordinates';
 
-export default interface ArcCollection {
+export interface ArcCollection {
   main: Arc<unknown, ArcCoordinates>
   mouse: Arc<unknown, ArcCoordinates>
   zero: Arc<unknown, ArcCoordinates>
+}
+
+
+export interface ArcCoordinates {
+  x0: number
+  x1: number
+  y0: number
+  y1: number
 }
