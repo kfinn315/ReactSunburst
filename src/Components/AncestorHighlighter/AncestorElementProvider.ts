@@ -10,7 +10,7 @@ export default class AncestorElementProvider implements IAncestorElementProvider
   private readonly arcPathElementProvider;
 
   forItem(item: HierarchyNode<SunburstItemTreeNode>): SVGPathElement[] {
-    return (getAncestorData(item) ?? []).map(this.arcPathElementProvider.forItem).filter(element => element != null)
+    return (getAncestorData(item) ?? []).map(this.arcPathElementProvider.forItem).filter(element => element != null) as SVGPathElement[]
   }
 
   getAll(): SVGPathElement[] {
