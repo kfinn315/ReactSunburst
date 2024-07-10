@@ -8,11 +8,11 @@ import { SunburstItem, SunburstItemTreeNode } from './Components/Types';
 import BoxDimensions from './Shared/BoxDimensions';
 import Sunburst from './Components/Sunburst/Sunburst';
 import { getSunburstItemHierarchyNodes } from './Components/DataManipulation/SunburstItemHierarchy/getSunburstItemHierarchyNodes';
-import getSunburstHighlighter from './Components/AncestorHighlighter/getSunburstHighlighter';
+import { createSunburstHighlighter } from './Components/SunburstHighlighter';
 
 function App() {
     const [detail, setDetail] = useState<string | undefined>();
-    const radius = 700;
+    const radius = 300;
     const sunburstDimensions: BoxDimensions = {
         width: 2 * Math.PI,
         height: radius * radius
@@ -43,7 +43,7 @@ function App() {
             </div>
             <div className='sunburst-content'>
                 <svg width={svgDimension} height={svgDimension}>
-                    <Sunburst<SunburstItem> getHighlighter={getSunburstHighlighter} getArcColor={getArcColor} radius={radius} items={hierarchyNodes} centerColor={colorGradient[0]} mouseEnterEvent={mouseEnterHandler} mouseLeaveEvent={mouseLeaveHandler} arcIsClickable={() => false} />
+                    <Sunburst<SunburstItem> getHighlighter={createSunburstHighlighter} getArcColor={getArcColor} radius={radius} items={hierarchyNodes} centerColor={colorGradient[0]} mouseEnterEvent={mouseEnterHandler} mouseLeaveEvent={mouseLeaveHandler} arcIsClickable={() => false} />
                 </svg>
                 <label>{detail}</label>
             </div>
