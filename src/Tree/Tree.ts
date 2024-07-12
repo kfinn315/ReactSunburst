@@ -1,7 +1,7 @@
 import { SegmentNode, TreeNode } from './Types';
 
 /**
- * 
+ * Create a tree data structure by adding SegmentNode items to a root node
  * @param items Items with segment information to build the tree with
  * @returns Root node of the tree
  */
@@ -12,19 +12,18 @@ export default function createTree<T>(items: SegmentNode<T>[]): TreeNode<T> {
     items.forEach(item => {
         const iterator = item.segments.values()
         const data = item.data
+        id = addSegmentToTreeNodeRecursively(++id, rootNode, iterator, data)
         id++
-        id = addSegmentToTreeNodeRecursively(id, rootNode, iterator, data)
     })
 
     return rootNode
 }
 
-
-function findNode(children: TreeNode<T>[], name: string): TreeNode<T> | undefined {
+function findNode<T>(children: TreeNode<T>[], name: string): TreeNode<T> | undefined {
     return children.find(x => x.name === name)
 }
 
-function addSegmentToTreeNodeRecursively(nextID: number, treeNode: TreeNode<T>, iterator: IterableIterator<string>, data: T): number {
+export function addSegmentToTreeNodeRecursively<T>(nextID: number, treeNode: TreeNode<T>, iterator: IterableIterator<string>, data: T): number {
     let id = nextID
     if (treeNode === undefined) {
         throw Error("treeNode is undefined")
