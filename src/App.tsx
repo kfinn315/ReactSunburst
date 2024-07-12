@@ -7,8 +7,8 @@ import { sunburstItemData } from './data';
 import { SunburstItem, SunburstItemTreeNode } from './Components/Types';
 import BoxDimensions from './Shared/BoxDimensions';
 import Sunburst from './Components/Sunburst/Sunburst';
-import { getSunburstItemHierarchyNodes } from './Components/DataManipulation/SunburstItemHierarchy/getSunburstItemHierarchyNodes';
-import { createSunburstHighlighter } from './Components/SunburstHighlighter';
+import { createSunburstHighlighter } from './Components/SunburstHighlighter/SunburstHighlighter';
+import SunburstItemHierarchyNode from './Components/SunburstItemHierarchyNode/SunburstItemHierarchyNode';
 
 function App() {
     const [detail, setDetail] = useState<string | undefined>();
@@ -18,9 +18,10 @@ function App() {
         height: radius * radius
     };
     const colorGradient = ["blue", "red"]
+    const centerColor = "blue"
     const colorScale = scaleLinear([min(sunburstItemData, x => x.color) ?? 0, max(sunburstItemData, x => x.color) ?? 0], colorGradient)
 
-    const hierarchyNodes: Array<HierarchyRectangularNode<SunburstItemTreeNode>> = getSunburstItemHierarchyNodes(sunburstItemData, sunburstDimensions);
+    const hierarchyNodes: Array<HierarchyRectangularNode<SunburstItemTreeNode>> = SunburstItemHierarchyNode(sunburstItemData, sunburstDimensions).descendants();
 
     function summarizeItem(item: HierarchyNode<SunburstItemTreeNode>): string {
         return item.ancestors().map(x => x.data?.name ?? "?").reverse().slice(1).join('.')
@@ -32,7 +33,7 @@ function App() {
 
     const svgDimension = radius * 2;
 
-    const getArcColor = (d: HierarchyRectangularNode<SunburstItemTreeNode>) => d.data.data?.color ? colorScale(d.data.data.color) : colorGradient[0]
+    const getArcColor = (d: HierarchyRectangularNode<SunburstItemTreeNode>) => d.data.data?.color ? colorScale(d.data.data.color) : centerColor
 
     return (<>
         <h1>React Sunburst Demo</h1>
@@ -43,7 +44,7 @@ function App() {
             </div>
             <div className='sunburst-content'>
                 <svg width={svgDimension} height={svgDimension}>
-                    <Sunburst<SunburstItem> getHighlighter={createSunburstHighlighter} getArcColor={getArcColor} radius={radius} items={hierarchyNodes} centerColor={colorGradient[0]} mouseEnterEvent={mouseEnterHandler} mouseLeaveEvent={mouseLeaveHandler} arcIsClickable={() => false} />
+                    <Sunburst<SunburstItem> getHighlighter={createSunburstHighlighter} getArcColor={getArcColor} radius={radius} items={hierarchyNodes} mouseEnterEvent={mouseEnterHandler} mouseLeaveEvent={mouseLeaveHandler} arcIsClickable={() => false} />
                 </svg>
                 <label>{detail}</label>
             </div>

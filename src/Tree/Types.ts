@@ -15,3 +15,13 @@ export type TreeNode<T> = {
 export interface ITree<T> {
     rootNode: TreeNode<T>;
 }
+
+export interface Segment<T> {
+    iterator: IterableIterator<string>;
+    id: number //full sequence name
+    name: string // segment name
+    data: T
+    done: boolean;
+}
+
+export type NewSegment<T> = Segment<T> & { id?: number }

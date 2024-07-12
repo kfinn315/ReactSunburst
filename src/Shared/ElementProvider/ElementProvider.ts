@@ -5,6 +5,9 @@ export interface IElementProvider<T, E extends Element = Element> {
   getAll: () => E[];
 }
 
+export type ISelectorProvider<T> = (item?: T) => string;
+
+
 /**
  * @param T type of input item
  * @param B type of ref
@@ -16,7 +19,7 @@ export interface IElementProvider<T, E extends Element = Element> {
  */
 export default function ElementProvider<T, B extends Element = Element, E extends Element = Element>(
   ref: MutableRefObject<B | null>,
-  getSelector: (item?: T) => string
+  getSelector: ISelectorProvider<T>
 ): IElementProvider<T, E> {
 
   function getElementForItem(item: T): E | null {

@@ -4,24 +4,23 @@ import SunburstEvent from './SunburstEvent';
 import { ArcCollection } from '../Arcs/Types';
 import { TreeNode } from '../../Tree/Types';
 
-export interface SunburstViewProps<T> {
+export interface Props<T> {
   duration: number
-  arcCollection: ArcCollection
+  arcs: ArcCollection
   mouseEnterEvent: SunburstEvent<T>
   mouseLeaveEvent: SunburstEvent<T>
   clickEvent: SunburstEvent<T>
-  centerColor: string
   getArcColor: (d: HierarchyRectangularNode<T>) => string
   arcIsClickable: (d: HierarchyRectangularNode<T>) => boolean
 }
 
 export default class SunburstController<T extends TreeNode<unknown>> {
-  constructor(private readonly ref: MutableRefObject<SVGGElement | null>, private readonly props: SunburstViewProps<T>) { }
+  constructor(private readonly ref: MutableRefObject<SVGGElement | null>, private readonly props: Props<T>) { }
   #getID(d: HierarchyRectangularNode<T>) {
     return d.data.id;
   }
   initialize(items: Array<HierarchyRectangularNode<T>> = []): void {
-
+    const { arcs: arcCollection, arcIsClickable, clickEvent, duration, getArcColor, mouseEnterEvent, mouseLeaveEvent } = this.props;
     if (this.ref.current == null) {
       return;
     }
@@ -38,9 +37,9 @@ export default class SunburstController<T extends TreeNode<unknown>> {
       arcsEnter
         .merge(arcs)
         .transition()
-        .duration(this.props.duration)
-        .attr('fill', this.props.getArcColor)
-        .attr('d', this.props.arcCollection.main)
+        .duration(duration)
+        .attr('fill', getArcColor)
+        .attr('d', arcCollection.padded)
         .attr('data-id', this.#getID);
 
       arcs.exit().remove();
@@ -60,26 +59,26 @@ export default class SunburstController<T extends TreeNode<unknown>> {
       const mousearcsEnter = mousearcs
         .enter()
         .append('path')
-        .attr('class', (d) => (this.props.arcIsClickable(d) ? 'clickable' : null))
+        .attr('class', (d) => (arcIsClickable(d) ? 'clickable' : null))
         .attr('data-id', this.#getID);
 
       mousearcsEnter
         .on('mouseenter', (ev: MouseEvent, d) => {
-          this.props.mouseEnterEvent(ev, d);
+          mouseEnterEvent(ev, d);
         })
-        .on('mouseout', (ev, d) => { this.props.mouseLeaveEvent(ev, d); })
-        .on('click', (ev, d) => { this.props.clickEvent(ev, d); })
+        .on('mouseout', (ev, d) => { mouseLeaveEvent(ev, d); })
+        .on('click', (ev, d) => { clickEvent(ev, d); })
         .merge(mousearcs)
         .transition()
-        .duration(this.props.duration)
-        .attr('d', this.props.arcCollection.mouse);
+        .duration(duration)
+        .attr('d', arcCollection.basic);
 
       //animate arc removal - arc radii become zero (arcCollection.zero)
       mousearcs
         .exit<HierarchyRectangularNode<T>>()
         .transition()
-        .duration(this.props.duration)
-        .attr('d', this.props.arcCollection.zero)
+        .duration(duration)
+        .attr('d', arcCollection.zero)
         .remove();
     }
 

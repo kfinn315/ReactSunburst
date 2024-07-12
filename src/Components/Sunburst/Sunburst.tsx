@@ -4,17 +4,16 @@ import { useLayoutEffect, useMemo, useRef } from 'react';
 import SunburstController from './SunburstController';
 import { HierarchyNode, HierarchyRectangularNode } from 'd3';
 import SunburstEvent from './SunburstEvent';
-import { ArcGroup } from '../Arcs/getArcCollection';
-import { IAncestorHighlighter } from '../AncestorHighlighter/AncestorHighlighter';
+import ArcGroup from '../Arcs/ArcGroup';
 import { TreeNode } from '../../Tree/Types';
-import { GetHighlighterMethod } from "../AncestorHighlighter/GetHighlighterMethod";
+import { Highlighter } from "../../Highlighter/Types";
+import { GetHighlighterMethod } from "../SunburstHighlighter/GetHighlighterMethod";
 
 export interface SunburstProps<T> {
   id?: string
   radius?: number
-  items: HierarchyRectangularNode<TreeNode<T>>[]
   duration?: number
-  centerColor?: string
+  items: HierarchyRectangularNode<TreeNode<T>>[]
   clickEvent?: SunburstEvent<TreeNode<T>>
   mouseEnterEvent?: SunburstEvent<TreeNode<T>>
   mouseLeaveEvent?: SunburstEvent<TreeNode<T>>
@@ -27,7 +26,6 @@ export interface SunburstProps<T> {
 export default function Sunburst<T>(props: SunburstProps<T>): JSX.Element {
   const {
     id,
-    centerColor = 'white',
     radius = 20,
     clickEvent,
     duration = 100,
@@ -41,9 +39,9 @@ export default function Sunburst<T>(props: SunburstProps<T>): JSX.Element {
   } = props;
 
   const gElementRef = useRef<SVGGElement | null>(null);
-  const arcCollection = new ArcGroup(radius);
+  const arcs = new ArcGroup(radius);
 
-  const highlighter: IAncestorHighlighter<HierarchyNode<TreeNode<T>>> | undefined = getHighlighter?.(gElementRef);
+  const highlighter: Highlighter<HierarchyNode<TreeNode<T>>> | undefined = getHighlighter?.(gElementRef);
 
   const controller = useMemo(() => {
 
@@ -63,16 +61,15 @@ export default function Sunburst<T>(props: SunburstProps<T>): JSX.Element {
 
     return new SunburstController<TreeNode<T>>(gElementRef,
       {
-        centerColor,
         duration,
-        arcCollection,
+        arcs: arcs,
         clickEvent: clickEventHandler,
         mouseEnterEvent: mouseEnterHandler,
         mouseLeaveEvent: mouseLeaveHandler,
         getArcColor,
         arcIsClickable
       })
-  }, [arcCollection, centerColor, clickEvent, duration, highlighter, mouseEnterEvent, mouseLeaveEvent]);
+  }, [arcs, clickEvent, duration, highlighter, mouseEnterEvent, mouseLeaveEvent]);
 
   useLayoutEffect(() => {
     controller.initialize(items)

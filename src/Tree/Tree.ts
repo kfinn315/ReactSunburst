@@ -1,13 +1,5 @@
 import { SegmentNode, TreeNode } from './Types';
 
-type Segment<T> = {
-    iterator: IterableIterator<string>;
-    id: number //full sequence name
-    name: string // segment name
-    data: T
-    done: boolean;
-}
-
 /**
  * 
  * @param items Items with segment information to build the tree with
@@ -16,50 +8,45 @@ type Segment<T> = {
 export default function createTree<T>(items: SegmentNode<T>[]): TreeNode<T> {
     let id = 0;
 
-    const rootNode: TreeNode<T> = { id: getNextID(), name: "root", children: [] };
-    const segments: Segment<T>[] = items.map(item => {
-        return { data: item.data, done: false, iterator: item.segments.values(), id: getNextID(), name: item.name }
+    const rootNode: TreeNode<T> = { id, name: "root", children: [] };
+    items.forEach(item => {
+        const iterator = item.segments.values()
+        const data = item.data
+        id++
+        id = addSegmentToTreeNodeRecursively(id, rootNode, iterator, data)
     })
-    segments.forEach(item => {
-        addSegmentToTree(rootNode, item)
-    })
+
     return rootNode
+}
 
-    function addSegmentToTree(treeNode: TreeNode<T>, segment: Segment<T>) {
-        const { id, name, done, data } = getNextSegment(segment);
 
-        if (done) {
-            treeNode.data = data;
-            return;
-        }
+function findNode(children: TreeNode<T>[], name: string): TreeNode<T> | undefined {
+    return children.find(x => x.name === name)
+}
 
-        if (treeNode === undefined) {
-            throw Error("should not have undefined tree node")
-        }
-
-        let nextNode: TreeNode<T> | undefined = findNode(treeNode.children, name);
-
-        if (nextNode === undefined) {
-            //create new node and add to treeNode.children
-            nextNode = { children: [], id, name }
-            treeNode.children.push(nextNode as TreeNode<T>)
-        }
-        addSegmentToTree(nextNode as TreeNode<T>, segment)
-    }
-    function getNextID(): number {
-        return id++;
-    }
-    function getNextSegment(segment: Segment<T>): Segment<T> {
-        if (segment === undefined) {
-            throw Error("segment should not be undefined")
-        }
-
-        const { value: name } = segment.iterator.next()
-
-        return { iterator: segment.iterator, data: segment.data, id: getNextID(), name, done: name == undefined }
+function addSegmentToTreeNodeRecursively(nextID: number, treeNode: TreeNode<T>, iterator: IterableIterator<string>, data: T): number {
+    let id = nextID
+    if (treeNode === undefined) {
+        throw Error("treeNode is undefined")
     }
 
-    function findNode(children: TreeNode<T>[], name: string): TreeNode<T> | undefined {
-        return children.find(x => x.name === name)
+    const { value: nextSegmentName } = iterator.next();
+
+    //end of segments, set segment.data to node.data and end recursion by returning
+    if (nextSegmentName == undefined) {
+        treeNode.data = data;
+        return id;
     }
+
+    let childNode = findNode(treeNode.children, nextSegmentName);
+
+    if (childNode === undefined) {
+        //create new node and add to children
+        childNode = { id, name: nextSegmentName, children: [] }
+        id++;
+        treeNode.children.push(childNode)
+    }
+
+
+    return addSegmentToTreeNodeRecursively(id, childNode, iterator, data)
 }
