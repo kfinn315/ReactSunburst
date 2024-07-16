@@ -1,6 +1,7 @@
-import { SunburstItem, SunburstItemNode } from "./Models";
+import { SunburstItemNode } from './Models/SunburstItemNode';
+import { SunburstItem } from './Models/SunburstItem';
 
-export const sunburstItemData: SunburstItem[] = [
+export const flatData: readonly SunburstItem[] = [
     { id: 0, name: '1', color: 0, size: 200 },
     { id: 1, name: '1.2', color: 515, size: 10 },
     { id: 2, name: '1.2.3', color: 250, size: 2 },
@@ -11,7 +12,7 @@ export const sunburstItemData: SunburstItem[] = [
     { id: 776, name: '0.3.25.38', color: 10, size: 9 },
 ];
 
-export const data1: SunburstItemNode[] = [
+export const hierarchicalData: readonly SunburstItemNode[] = [
     {
         id: 0, name: '1', color: 0, size: 200, children: [
             {
@@ -21,7 +22,7 @@ export const data1: SunburstItemNode[] = [
                 ]
             }, {
                 id: 4, name: '2', color: 350, size: 120, children: [
-                    { id:5, name: '3', color: 1000, size: 90 },
+                    { id: 5, name: '3', color: 1000, size: 90 },
                 ]
             }
         ]

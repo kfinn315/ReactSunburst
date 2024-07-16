@@ -4,7 +4,7 @@ import SunburstEvent from './Types';
 import { Arcs } from '../../Services/Arcs';
 import { TreeNode } from '../../Services/Tree';
 
-export interface Props<T> {
+export interface SunburstControllerProps<T> {
   duration: number
   arcs: Arcs
   mouseEnterEvent: SunburstEvent<T>
@@ -17,10 +17,10 @@ export interface Props<T> {
 export default class SunburstController<T extends TreeNode<unknown>> {
   constructor(
     private readonly ref: MutableRefObject<SVGGElement | null>,
-    private readonly props: Props<T>
+    private readonly props: SunburstControllerProps<T>
   ) { }
 
-  #getID(d: HierarchyRectangularNode<T>) {
+  #getID = (d: HierarchyRectangularNode<T>) => {
     return d.data.id;
   }
   /**
@@ -28,7 +28,7 @@ export default class SunburstController<T extends TreeNode<unknown>> {
    * @param items 
    * @returns 
    */
-  initialize(items: Array<HierarchyRectangularNode<T>> = []): void {
+  initialize(items: HierarchyRectangularNode<T>[] = []): void {
     const {
       arcs: arcCollection,
       arcIsClickable,
@@ -88,8 +88,8 @@ export default class SunburstController<T extends TreeNode<unknown>> {
         .on('mouseenter', (ev: MouseEvent, d) => {
           mouseEnterEvent(ev, d);
         })
-        .on('mouseout', (ev, d) => { mouseLeaveEvent(ev, d); })
-        .on('click', (ev, d) => { clickEvent(ev, d); })
+        .on('mouseout', (ev: MouseEvent, d) => { mouseLeaveEvent(ev, d); })
+        .on('click', (ev: MouseEvent, d) => { clickEvent(ev, d); })
         .merge(mousearcs)
         .transition()
         .duration(duration)

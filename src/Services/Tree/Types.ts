@@ -4,9 +4,10 @@ export interface SegmentNode<T> {
     data: T;
 };
 
+
 export interface TreeNode<T> {
     id: number,
-    name: string,
+    name: string | null,
     data?: T
     children: TreeNode<T>[]
 }

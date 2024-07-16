@@ -12,11 +12,11 @@ export default class CollectionClassModifier implements ICollectionClassModifier
         this.classModifer = new CssClassModifier(className)
     }
 
-    add(elements: Element[]): void {
+    add(elements?: Element[]): void {
         elements?.forEach(element => { this.classModifer.addClassTo(element); })
     }
 
-    remove(elements: Element[]): void {
+    remove(elements?: Element[]): void {
         elements?.forEach(element => { this.classModifer.removeClassFrom(element); })
     }
 }

@@ -1,5 +1,5 @@
 import { HierarchyNode } from "d3";
-import { SunburstItemTreeNode } from "../../Models";
+import { SunburstItemTreeNode } from '../../Models/SunburstItemTreeNode';
 import AncestorElementProvider from "./AncestorElementProvider";
 import { type Highlighter, type IElementsProvider, BasicHighlighter } from "../Highlighter";
 

@@ -1,5 +1,5 @@
 import { HierarchyNode } from 'd3';
-import CollectionClassModifier from '../../Shared/CSSClassModifier/CollectionClassModifier';
+import CollectionClassModifier from '../../Utils/CSSClassModifier/CollectionClassModifier';
 import { IElementsProvider, Highlighter } from './Types';
 
 /**

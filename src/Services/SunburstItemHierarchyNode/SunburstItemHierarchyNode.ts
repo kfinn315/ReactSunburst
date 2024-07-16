@@ -1,8 +1,9 @@
 import { HierarchyNode, HierarchyRectangularNode } from 'd3';
-import BoxDimensions from "../../Shared/BoxDimensions";
+import BoxDimensions from "../../Types/BoxDimensions";
 import { SegmentNode, createTree } from "../Tree";
 import { TreePartitionLayout } from '../PartitionLayout';
-import { SunburstItem, SunburstItemTreeNode } from '../../Models';
+import { SunburstItemTreeNode } from '../../Models/SunburstItemTreeNode';
+import { SunburstItem } from '../../Models/SunburstItem';
 
 
 function getSegments(item: SunburstItem): string[] {
@@ -21,8 +22,8 @@ function getSunburstHierarchyRectangularNode(root: SunburstItemTreeNode, dimensi
     return TreePartitionLayout<SunburstItem>(root, dimensions, getSunburstItemNodeValue, sortSunburstItemByDataSize);
 }
 
-export default function SunburstItemHierarchyNode(items: SunburstItem[], layoutDimensions: BoxDimensions): HierarchyRectangularNode<SunburstItemTreeNode> {
-    const segmentNodes: Array<SegmentNode<SunburstItem>> = items.map(item => ({ data: item, segments: getSegments(item) }))
+export default function SunburstItemHierarchyNode(items: readonly SunburstItem[], layoutDimensions: BoxDimensions): HierarchyRectangularNode<SunburstItemTreeNode> {
+    const segmentNodes: SegmentNode<SunburstItem>[] = items.map(item => ({ data: item, segments: getSegments(item) }))
     const rootTreeNode = createTree<SunburstItem>(segmentNodes)
     return getSunburstHierarchyRectangularNode(rootTreeNode, layoutDimensions)
 }

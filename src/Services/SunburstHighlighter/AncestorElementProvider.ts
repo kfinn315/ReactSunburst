@@ -1,8 +1,9 @@
 import { HierarchyNode } from "d3";
-import ElementProvider, { IElementProvider } from "../../Shared/ElementProvider/ElementProvider";
-import { SunburstItemTreeNode, SunburstItem } from "../../Models";
+import ElementProvider, { IElementProvider } from "../../Utils/ElementProvider/ElementProvider";
+import { SunburstItemTreeNode } from '../../Models/SunburstItemTreeNode';
+import { SunburstItem } from '../../Models/SunburstItem';
 import ArcPathSelectorProvider from "./ArcPathSelectorProvider";
-import getAncestorData from "../../Shared/getAncestorData";
+import getAncestorData from "../../Utils/getAncestorData";
 import { IElementsProvider } from "../Highlighter";
 
 

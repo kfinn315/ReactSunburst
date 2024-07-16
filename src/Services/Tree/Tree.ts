@@ -1,19 +1,19 @@
 import { TreeNode } from './Types';
 
-function findNode<T>(children: TreeNode<T>[], name: string): TreeNode<T> | undefined {
+function findNode<T>(children: TreeNode<T>[], name: string | null): TreeNode<T> | undefined {
     return children.find(x => x.name === name)
 }
 
-export function addSegmentToTreeNodeRecursively<T>(nextID: number, treeNode: TreeNode<T>, iterator: IterableIterator<string>, data: T): number {
+export function addSegmentToTreeNodeRecursively<T>(nextID: number, treeNode: TreeNode<T> | null, iterator: IterableIterator<string>, data: T): number {
     let id = nextID
-    if (treeNode === undefined) {
-        throw Error("treeNode is undefined")
+    if (treeNode === null) {
+        throw Error("treeNode is null")
     }
 
-    const { value: nextSegmentName } = iterator.next();
+    const { value: nextSegmentName } = iterator.next() as { value: string | null };
 
     //end of segments, set segment.data to node.data and end recursion by returning
-    if (nextSegmentName == undefined) {
+    if (!nextSegmentName) {
         treeNode.data = data;
         return id;
     }

@@ -27,6 +27,7 @@ export default function ElementProvider<T, B extends Element = Element, E extend
       return null;
     }
     const selector = getSelector(item)
+
     if (selector === "") {
       return null;
     }
@@ -34,7 +35,7 @@ export default function ElementProvider<T, B extends Element = Element, E extend
   }
 
   function getAll(): E[] {
-    return [...ref.current?.querySelectorAll<E>(getSelector())?.values() ?? []];
+    return [...ref.current?.querySelectorAll<E>(getSelector()).values() ?? []];
   }
 
   return { forItem: getElementForItem, getAll };

@@ -9,7 +9,7 @@ import { TreeNode } from '../../Services/Tree';
 import { Highlighter } from "../../Services/Highlighter";
 import { GetHighlighterMethod } from "../../Services/SunburstHighlighter";
 
-export interface SunburstProps<T> {
+export interface SunburstViewProps<T> {
   id?: string
   radius?: number
   duration?: number
@@ -23,7 +23,7 @@ export interface SunburstProps<T> {
   arcIsClickable: (d: HierarchyRectangularNode<TreeNode<T>>) => boolean
 }
 
-export default function SunburstView<T>(props: SunburstProps<T>): JSX.Element {
+export default function SunburstView<T>(props: SunburstViewProps<T>): JSX.Element {
   const {
     id,
     radius = 20,
@@ -76,7 +76,7 @@ export default function SunburstView<T>(props: SunburstProps<T>): JSX.Element {
   }, [items, controller]);
 
   return (
-    <g id={id} ref={gElementRef} preserveAspectRatio="xMinYMin meet" transform={`translate(${radius},${radius})`}>
+    <g id={id} ref={gElementRef} preserveAspectRatio="xMinYMin meet" transform={`translate(${String(radius)},${String(radius)})`}>
       <g className="arc"></g>
       <g className="mousearc"></g>
       {centerElement}
