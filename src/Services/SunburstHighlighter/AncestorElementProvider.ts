@@ -1,5 +1,6 @@
 import { HierarchyNode } from "d3";
-import ElementProvider, { IElementProvider } from "../../Utils/ElementProvider/ElementProvider";
+import ElementProvider from "../../Utils/ElementProvider/ElementProvider";
+import { IElementProvider } from '../../Utils/ElementProvider/IElementProvider';
 import { SunburstItemTreeNode } from '../../Models/SunburstItemTreeNode';
 import { SunburstItem } from '../../Models/SunburstItem';
 import ArcPathSelectorProvider from "./ArcPathSelectorProvider";
@@ -21,5 +22,4 @@ export default class AncestorElementProvider implements IElementsProvider<Hierar
   getAll(): SVGPathElement[] {
     return this.arcPathElementProvider.getAll();
   }
-
 }

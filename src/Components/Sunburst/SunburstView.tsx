@@ -9,21 +9,21 @@ import { TreeNode } from '../../Services/Tree';
 import { Highlighter } from "../../Services/Highlighter";
 import { GetHighlighterMethod } from "../../Services/SunburstHighlighter";
 
-export interface SunburstViewProps<T> {
+export interface SunburstViewProps<TDatum> {
   id?: string
   radius?: number
   duration?: number
-  items: HierarchyRectangularNode<TreeNode<T>>[]
-  clickEvent?: SunburstEvent<TreeNode<T>>
-  mouseEnterEvent?: SunburstEvent<TreeNode<T>>
-  mouseLeaveEvent?: SunburstEvent<TreeNode<T>>
+  items: HierarchyRectangularNode<TreeNode<TDatum>>[]
+  clickEvent?: SunburstEvent<TreeNode<TDatum>>
+  mouseEnterEvent?: SunburstEvent<TreeNode<TDatum>>
+  mouseLeaveEvent?: SunburstEvent<TreeNode<TDatum>>
   centerElement?: JSX.Element
-  getHighlighter?: GetHighlighterMethod<T>
-  getArcColor: (d: HierarchyRectangularNode<TreeNode<T>>) => string
-  arcIsClickable: (d: HierarchyRectangularNode<TreeNode<T>>) => boolean
+  getHighlighter?: GetHighlighterMethod<TDatum>
+  getArcColor: (d: HierarchyRectangularNode<TreeNode<TDatum>>) => string
+  arcIsClickable: (d: HierarchyRectangularNode<TreeNode<TDatum>>) => boolean
 }
 
-export default function SunburstView<T>(props: SunburstViewProps<T>): JSX.Element {
+export default function SunburstView<TDatum>(props: SunburstViewProps<TDatum>): JSX.Element {
   const {
     id,
     radius = 20,
@@ -41,25 +41,25 @@ export default function SunburstView<T>(props: SunburstViewProps<T>): JSX.Elemen
   const gElementRef = useRef<SVGGElement | null>(null);
   const arcs: Arcs = new ArcGroup(radius);
 
-  const highlighter: Highlighter<HierarchyNode<TreeNode<T>>> | undefined = getHighlighter?.(gElementRef);
+  const highlighter: Highlighter<HierarchyNode<TreeNode<TDatum>>> | undefined = getHighlighter?.(gElementRef);
 
   const controller = useMemo(() => {
 
-    function mouseEnterHandler(event: MouseEvent, d: HierarchyNode<TreeNode<T>>): void {
+    function mouseEnterHandler(event: MouseEvent, d: HierarchyNode<TreeNode<TDatum>>): void {
       highlighter?.highlight(d);
       mouseEnterEvent?.(event, d);
     }
 
-    function mouseLeaveHandler(event: MouseEvent, d: HierarchyNode<TreeNode<T>>): void {
+    function mouseLeaveHandler(event: MouseEvent, d: HierarchyNode<TreeNode<TDatum>>): void {
       highlighter?.clear();
       mouseLeaveEvent?.(event, d);
     }
 
-    function clickEventHandler(event: MouseEvent, d: HierarchyNode<TreeNode<T>>): void {
+    function clickEventHandler(event: MouseEvent, d: HierarchyNode<TreeNode<TDatum>>): void {
       clickEvent?.(event, d);
     }
 
-    return new SunburstController<TreeNode<T>>(gElementRef,
+    return new SunburstController<TreeNode<TDatum>>(gElementRef,
       {
         duration,
         arcs,

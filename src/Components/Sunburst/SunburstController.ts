@@ -4,23 +4,23 @@ import SunburstEvent from './Types';
 import { Arcs } from '../../Services/Arcs';
 import { TreeNode } from '../../Services/Tree';
 
-export interface SunburstControllerProps<T> {
+export interface SunburstControllerProps<TNode> {
   duration: number
   arcs: Arcs
-  mouseEnterEvent: SunburstEvent<T>
-  mouseLeaveEvent: SunburstEvent<T>
-  clickEvent: SunburstEvent<T>
-  getArcColor: (d: HierarchyRectangularNode<T>) => string
-  arcIsClickable: (d: HierarchyRectangularNode<T>) => boolean
+  mouseEnterEvent: SunburstEvent<TNode>
+  mouseLeaveEvent: SunburstEvent<TNode>
+  clickEvent: SunburstEvent<TNode>
+  getArcColor: (d: HierarchyRectangularNode<TNode>) => string
+  arcIsClickable: (d: HierarchyRectangularNode<TNode>) => boolean
 }
 
-export default class SunburstController<T extends TreeNode<unknown>> {
+export default class SunburstController<TNode extends TreeNode<unknown>> {
   constructor(
     private readonly ref: MutableRefObject<SVGGElement | null>,
-    private readonly props: SunburstControllerProps<T>
+    private readonly props: SunburstControllerProps<TNode>
   ) { }
 
-  #getID = (d: HierarchyRectangularNode<T>) => {
+  #getID = (d: HierarchyRectangularNode<TNode>) => {
     return d.data.id;
   }
   /**
@@ -28,7 +28,7 @@ export default class SunburstController<T extends TreeNode<unknown>> {
    * @param items 
    * @returns 
    */
-  initialize(items: HierarchyRectangularNode<T>[] = []): void {
+  initialize(items: HierarchyRectangularNode<TNode>[] = []): void {
     const {
       arcs: arcCollection,
       arcIsClickable,
@@ -43,7 +43,7 @@ export default class SunburstController<T extends TreeNode<unknown>> {
       return;
     }
 
-    const selection = select<SVGGElement, HierarchyRectangularNode<T>>(
+    const selection = select<SVGGElement, HierarchyRectangularNode<TNode>>(
       this.ref.current
     );
 
@@ -51,7 +51,7 @@ export default class SunburstController<T extends TreeNode<unknown>> {
       const arcGroup = selection.select('.arc');
 
       const arcs = arcGroup
-        .selectAll<SVGPathElement, HierarchyRectangularNode<T>>('path')
+        .selectAll<SVGPathElement, HierarchyRectangularNode<TNode>>('path')
         .data(items, this.#getID);
 
       const arcsEnter = arcs.enter().append('path');
@@ -75,7 +75,7 @@ export default class SunburstController<T extends TreeNode<unknown>> {
         .attr('pointer-events', 'all');
       // .on('mouseleave', mouseleaveEvent)
       const mousearcs = mouseGroup
-        .selectAll<SVGPathElement, HierarchyRectangularNode<T>>('path')
+        .selectAll<SVGPathElement, HierarchyRectangularNode<TNode>>('path')
         .data(items, this.#getID);
 
       const mousearcsEnter = mousearcs
@@ -97,7 +97,7 @@ export default class SunburstController<T extends TreeNode<unknown>> {
 
       //animate arc removal - arc radii become zero (arcCollection.zero)
       mousearcs
-        .exit<HierarchyRectangularNode<T>>()
+        .exit<HierarchyRectangularNode<TNode>>()
         .transition()
         .duration(duration)
         .attr('d', arcCollection.zero)

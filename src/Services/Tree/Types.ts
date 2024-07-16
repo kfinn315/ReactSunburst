@@ -1,13 +1,13 @@
 
-export interface SegmentNode<T> {
+export interface SegmentNode<TData> {
     segments: string[];
-    data: T;
+    data: TData;
 };
 
 
-export interface TreeNode<T> {
+export interface TreeNode<TData> {
     id: number,
     name: string | null,
-    data?: T
-    children: TreeNode<T>[]
+    data?: TData
+    children: TreeNode<TData>[]
 }

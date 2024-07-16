@@ -6,11 +6,10 @@ import { SegmentNode, TreeNode } from "./Types";
  * @param items Items with segment information to build the tree with
  * @returns Root node of the tree
  */
-
-export default function createTree<T>(items: SegmentNode<T>[]): TreeNode<T> {
+export default function createTree<TData>(items: SegmentNode<TData>[]): TreeNode<TData> {
     let id = 0;
 
-    const rootNode: TreeNode<T> = { id, name: "root", children: [] };
+    const rootNode: TreeNode<TData> = { id, name: "root", children: [] };
     items.forEach(item => {
         const iterator = item.segments.values();
         const data = item.data;

@@ -1,4 +1,4 @@
 
-export type MyNode<T> = T & {
-    children?: T[];
+export type MyNode<TData> = TData & {
+    children?: TData[];
 };

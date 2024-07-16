@@ -1,10 +1,10 @@
 import { TreeNode } from './Types';
 
-function findNode<T>(children: TreeNode<T>[], name: string | null): TreeNode<T> | undefined {
+function findNode<TData>(children: TreeNode<TData>[], name: string | null): TreeNode<TData> | undefined {
     return children.find(x => x.name === name)
 }
 
-export function addSegmentToTreeNodeRecursively<T>(nextID: number, treeNode: TreeNode<T> | null, iterator: IterableIterator<string>, data: T): number {
+export function addSegmentToTreeNodeRecursively<TNode>(nextID: number, treeNode: TreeNode<TNode> | null, iterator: IterableIterator<string>, data: TNode): number {
     let id = nextID
     if (treeNode === null) {
         throw Error("treeNode is null")
