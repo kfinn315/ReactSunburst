@@ -1,4 +1,4 @@
-import { SunburstItem, SunburstItemNode } from "./Components/Types";
+import { SunburstItem, SunburstItemNode } from "./Models";
 
 export const sunburstItemData: SunburstItem[] = [
     { id: 0, name: '1', color: 0, size: 200 },

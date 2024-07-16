@@ -1,8 +1,7 @@
 import { HierarchyNode } from "d3";
-import BasicHighlighter from "../../Highlighter/BasicHighlighter";
-import { SunburstItemTreeNode } from "../Types";
+import { SunburstItemTreeNode } from "../../Models";
 import AncestorElementProvider from "./AncestorElementProvider";
-import { IElementsProvider, Highlighter } from "../../Highlighter/Types";
+import { type Highlighter, type IElementsProvider, BasicHighlighter } from "../Highlighter";
 
 export function createSunburstHighlighter(gElementRef: React.MutableRefObject<SVGGElement | null>) {
   return new SunburstHighlighter(gElementRef);

@@ -1,5 +1,12 @@
 import { Arc } from 'd3';
 
+
+export interface Arcs {
+  padded: Arc<unknown, ArcCoordinates>
+  basic: Arc<unknown, ArcCoordinates>
+  zero: Arc<unknown, ArcCoordinates>
+}
+
 export interface ArcCollection {
   padded: Arc<unknown, ArcCoordinates>
   basic: Arc<unknown, ArcCoordinates>

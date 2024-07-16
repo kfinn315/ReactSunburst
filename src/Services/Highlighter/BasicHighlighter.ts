@@ -1,9 +1,9 @@
 import { HierarchyNode } from 'd3';
-import CollectionClassModifier from '../Shared/CSSClassModifier/CollectionClassModifier';
+import CollectionClassModifier from '../../Shared/CSSClassModifier/CollectionClassModifier';
 import { IElementsProvider, Highlighter } from './Types';
 
 /**
- * Highlighter that adds the "highlight" class to the html elements given by the elementProvider
+ * Adds the "highlight" class to the html elements given by the elementProvider
  * @param elementProvider 
  * @returns IAncestorHighlighter object
  */

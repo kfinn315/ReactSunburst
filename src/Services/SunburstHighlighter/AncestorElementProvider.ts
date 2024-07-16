@@ -1,9 +1,9 @@
 import { HierarchyNode } from "d3";
 import ElementProvider, { IElementProvider } from "../../Shared/ElementProvider/ElementProvider";
-import { SunburstItemTreeNode, SunburstItem } from "../Types";
+import { SunburstItemTreeNode, SunburstItem } from "../../Models";
 import ArcPathSelectorProvider from "./ArcPathSelectorProvider";
 import getAncestorData from "../../Shared/getAncestorData";
-import { IElementsProvider } from "../../Highlighter/Types";
+import { IElementsProvider } from "../Highlighter";
 
 
 export default class AncestorElementProvider implements IElementsProvider<HierarchyNode<SunburstItemTreeNode>, SVGPathElement> {

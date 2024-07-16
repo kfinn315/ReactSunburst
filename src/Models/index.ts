@@ -1,4 +1,5 @@
-import { TreeNode } from "../Tree/Types";
+
+import { TreeNode } from '../Services/Tree';
 
 export interface SunburstItem {
     id: number;

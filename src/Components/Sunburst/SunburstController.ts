@@ -1,12 +1,12 @@
 import { HierarchyRectangularNode, select } from 'd3';
 import { MutableRefObject } from 'react';
-import SunburstEvent from './SunburstEvent';
-import { ArcCollection } from '../Arcs/Types';
-import { TreeNode } from '../../Tree/Types';
+import SunburstEvent from './Types';
+import { Arcs } from '../../Services/Arcs';
+import { TreeNode } from '../../Services/Tree';
 
 export interface Props<T> {
   duration: number
-  arcs: ArcCollection
+  arcs: Arcs
   mouseEnterEvent: SunburstEvent<T>
   mouseLeaveEvent: SunburstEvent<T>
   clickEvent: SunburstEvent<T>
@@ -15,22 +15,44 @@ export interface Props<T> {
 }
 
 export default class SunburstController<T extends TreeNode<unknown>> {
-  constructor(private readonly ref: MutableRefObject<SVGGElement | null>, private readonly props: Props<T>) { }
+  constructor(
+    private readonly ref: MutableRefObject<SVGGElement | null>,
+    private readonly props: Props<T>
+  ) { }
+
   #getID(d: HierarchyRectangularNode<T>) {
     return d.data.id;
   }
+  /**
+   * Initializes and updates the sunburst chart based on the provided items data
+   * @param items 
+   * @returns 
+   */
   initialize(items: Array<HierarchyRectangularNode<T>> = []): void {
-    const { arcs: arcCollection, arcIsClickable, clickEvent, duration, getArcColor, mouseEnterEvent, mouseLeaveEvent } = this.props;
-    if (this.ref.current == null) {
+    const {
+      arcs: arcCollection,
+      arcIsClickable,
+      clickEvent,
+      duration,
+      getArcColor,
+      mouseEnterEvent,
+      mouseLeaveEvent
+    } = this.props;
+
+    if (!this.ref.current) {
       return;
     }
 
-    const selection = select<SVGGElement, HierarchyRectangularNode<T>>(this.ref.current);
+    const selection = select<SVGGElement, HierarchyRectangularNode<T>>(
+      this.ref.current
+    );
 
     const createArcs = () => {
       const arcGroup = selection.select('.arc');
 
-      const arcs = arcGroup.selectAll<SVGPathElement, HierarchyRectangularNode<T>>('path').data(items, this.#getID);
+      const arcs = arcGroup
+        .selectAll<SVGPathElement, HierarchyRectangularNode<T>>('path')
+        .data(items, this.#getID);
 
       const arcsEnter = arcs.enter().append('path');
 

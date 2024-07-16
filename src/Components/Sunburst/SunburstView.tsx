@@ -1,13 +1,13 @@
 import './Sunburst.css';
 
 import { useLayoutEffect, useMemo, useRef } from 'react';
-import SunburstController from './SunburstController';
 import { HierarchyNode, HierarchyRectangularNode } from 'd3';
-import SunburstEvent from './SunburstEvent';
-import ArcGroup from '../Arcs/ArcGroup';
-import { TreeNode } from '../../Tree/Types';
-import { Highlighter } from "../../Highlighter/Types";
-import { GetHighlighterMethod } from "../SunburstHighlighter/GetHighlighterMethod";
+import SunburstController from './SunburstController';
+import SunburstEvent from './Types';
+import { ArcGroup, Arcs } from '../../Services/Arcs';
+import { TreeNode } from '../../Services/Tree';
+import { Highlighter } from "../../Services/Highlighter";
+import { GetHighlighterMethod } from "../../Services/SunburstHighlighter";
 
 export interface SunburstProps<T> {
   id?: string
@@ -23,7 +23,7 @@ export interface SunburstProps<T> {
   arcIsClickable: (d: HierarchyRectangularNode<TreeNode<T>>) => boolean
 }
 
-export default function Sunburst<T>(props: SunburstProps<T>): JSX.Element {
+export default function SunburstView<T>(props: SunburstProps<T>): JSX.Element {
   const {
     id,
     radius = 20,
@@ -39,7 +39,7 @@ export default function Sunburst<T>(props: SunburstProps<T>): JSX.Element {
   } = props;
 
   const gElementRef = useRef<SVGGElement | null>(null);
-  const arcs = new ArcGroup(radius);
+  const arcs: Arcs = new ArcGroup(radius);
 
   const highlighter: Highlighter<HierarchyNode<TreeNode<T>>> | undefined = getHighlighter?.(gElementRef);
 
@@ -62,7 +62,7 @@ export default function Sunburst<T>(props: SunburstProps<T>): JSX.Element {
     return new SunburstController<TreeNode<T>>(gElementRef,
       {
         duration,
-        arcs: arcs,
+        arcs,
         clickEvent: clickEventHandler,
         mouseEnterEvent: mouseEnterHandler,
         mouseLeaveEvent: mouseLeaveHandler,
@@ -76,7 +76,7 @@ export default function Sunburst<T>(props: SunburstProps<T>): JSX.Element {
   }, [items, controller]);
 
   return (
-    <g id={id} ref={gElementRef} className={'sb-element'} preserveAspectRatio="xMinYMin meet" transform={`translate(${radius},${radius})`}>
+    <g id={id} ref={gElementRef} preserveAspectRatio="xMinYMin meet" transform={`translate(${radius},${radius})`}>
       <g className="arc"></g>
       <g className="mousearc"></g>
       {centerElement}

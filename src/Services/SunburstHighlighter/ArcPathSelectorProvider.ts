@@ -1,4 +1,4 @@
-import { TreeNode } from "../../Tree/Types";
+import { TreeNode } from "../Tree";
 
 export default function ArcPathSelectorProvider<T extends { id: unknown }>(item?: TreeNode<T>): string {
   let selector: string;
