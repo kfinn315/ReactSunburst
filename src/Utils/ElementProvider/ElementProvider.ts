@@ -1,28 +1,21 @@
 import { MutableRefObject } from 'react';
-
-export interface IElementProvider<T, E extends Element = Element> {
-  forItem: (item: T) => E | null;
-  getAll: () => E[];
-}
-
-export type ISelectorProvider<T> = (item?: T) => string;
-
+import { IElementProvider, ISelectorProvider } from './Types';
 
 /**
- * @param T type of input item
- * @param B type of ref
- * @param E type of returned Element
+ * @param TInput type of input item
+ * @param TRef type of ref
+ * @param TElement type of returned Element
  * @param ref 
  * @param getSelector 
  * @param allSelector 
  * @returns 
  */
-export default function ElementProvider<T, B extends Element = Element, E extends Element = Element>(
-  ref: MutableRefObject<B | null>,
-  getSelector: ISelectorProvider<T>
-): IElementProvider<T, E> {
+export default function ElementProvider<TInput, TRef extends Element = Element, TElement extends Element = Element>(
+  ref: MutableRefObject<TRef | null>,
+  getSelector: ISelectorProvider<TInput>
+): IElementProvider<TInput, TElement> {
 
-  function getElementForItem(item: T): E | null {
+  function getElementForItem(item: TInput): TElement | null {
     if (item == undefined) {
       return null;
     }
@@ -31,11 +24,11 @@ export default function ElementProvider<T, B extends Element = Element, E extend
     if (selector === "") {
       return null;
     }
-    return ref.current?.querySelector<E>(selector) ?? null;
+    return ref.current?.querySelector<TElement>(selector) ?? null;
   }
 
-  function getAll(): E[] {
-    return [...ref.current?.querySelectorAll<E>(getSelector()).values() ?? []];
+  function getAll(): TElement[] {
+    return [...ref.current?.querySelectorAll<TElement>(getSelector()).values() ?? []];
   }
 
   return { forItem: getElementForItem, getAll };

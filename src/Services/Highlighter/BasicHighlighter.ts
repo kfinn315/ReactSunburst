@@ -7,12 +7,12 @@ import { IElementsProvider, Highlighter } from './Types';
  * @param elementProvider 
  * @returns IAncestorHighlighter object
  */
-export default function BasicHighlighter<T, E extends Element = Element>(elementProvider: IElementsProvider<HierarchyNode<T>, E>): Highlighter<HierarchyNode<T>> {
+export default function BasicHighlighter<TDatum, E extends Element = Element>(elementProvider: IElementsProvider<HierarchyNode<TDatum>, E>): Highlighter<HierarchyNode<TDatum>> {
   const highlighter = new CollectionClassModifier("highlight");
 
   return {
     clear: () => { highlighter.remove(elementProvider.getAll()) },
-    highlight: (hierarchyNode: HierarchyNode<T>) => {
+    highlight: (hierarchyNode: HierarchyNode<TDatum>) => {
       const pathElements = elementProvider.forItem(hierarchyNode);
       highlighter.add(pathElements)
     }

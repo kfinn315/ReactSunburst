@@ -1,5 +1,5 @@
 import { HierarchyNode } from "d3";
 
-type SunburstEvent<T> = (event: MouseEvent, d: HierarchyNode<T>) => void;
+type SunburstEvent<TDatum> = (event: MouseEvent, d: HierarchyNode<TDatum>) => void;
 
 export default SunburstEvent;
