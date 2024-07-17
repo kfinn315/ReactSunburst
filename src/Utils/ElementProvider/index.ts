@@ -1,4 +1,4 @@
 import ElementProvider from './ElementProvider';
-import { IElementProvider, ISelectorProvider } from './Types';
+import { IElementProvider, SelectorProvider } from './Types';
 
-export { ElementProvider, type IElementProvider, type ISelectorProvider }
+export { ElementProvider, type IElementProvider, type SelectorProvider }

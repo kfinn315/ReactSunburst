@@ -1,5 +1,5 @@
 import { MutableRefObject } from 'react';
-import { IElementProvider, ISelectorProvider } from './Types';
+import { IElementProvider, SelectorProvider } from './Types';
 
 /**
  * @param TInput type of input item
@@ -11,23 +11,20 @@ import { IElementProvider, ISelectorProvider } from './Types';
  */
 export default function ElementProvider<TInput, TRef extends Element = Element, TElement extends Element = Element>(
   ref: MutableRefObject<TRef | null>,
-  getSelector: ISelectorProvider<TInput>
+  selectorProvider: SelectorProvider<TInput>
 ): IElementProvider<TInput, TElement> {
 
   function getElementForItem(item: TInput): TElement | null {
     if (item == undefined) {
       return null;
     }
-    const selector = getSelector(item)
+    const selector = selectorProvider.forItem(item)
 
-    if (selector === "") {
-      return null;
-    }
     return ref.current?.querySelector<TElement>(selector) ?? null;
   }
 
   function getAll(): TElement[] {
-    return [...ref.current?.querySelectorAll<TElement>(getSelector()).values() ?? []];
+    return [...ref.current?.querySelectorAll<TElement>(selectorProvider.forAll()).values() ?? []];
   }
 
   return { forItem: getElementForItem, getAll };

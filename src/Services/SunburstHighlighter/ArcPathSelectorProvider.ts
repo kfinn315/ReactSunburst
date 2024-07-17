@@ -1,9 +1,7 @@
-import { TreeNode } from "../Tree";
+import { SunburstItemTreeNode } from "../../Models";
+import { SelectorProvider } from "../../Utils/ElementProvider";
 
-export default function ArcPathSelectorProvider<TData extends { id: unknown }>(item?: TreeNode<TData>): string {
-  if (item) {
-    return `.arc>path[data-id="${String(item.id)}"]`;
-  }
-
-  return '.arc>path'; //select all paths
+export const arcPathSelectorProvider: SelectorProvider<SunburstItemTreeNode> = {
+  forAll: () => '.arc>path', //select all paths
+  forItem: (item) => `.arc>path[data-id="${String(item.id)}"]`
 }

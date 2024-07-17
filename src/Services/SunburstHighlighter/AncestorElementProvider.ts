@@ -1,17 +1,15 @@
 import { HierarchyNode } from "d3";
 import { ElementProvider, IElementProvider } from "../../Utils/ElementProvider";
 import { SunburstItemTreeNode } from '../../Models/SunburstItemTreeNode';
-import { SunburstItem } from '../../Models/SunburstItem';
-import ArcPathSelectorProvider from "./ArcPathSelectorProvider";
+import { arcPathSelectorProvider } from "./arcPathSelectorProvider";
 import { getHierarchyNodeAncestorData } from "../../Utils/getAncestorData";
 import { IElementsProvider } from "../Highlighter";
-
 
 export default class AncestorElementProvider implements IElementsProvider<HierarchyNode<SunburstItemTreeNode>, SVGPathElement> {
   private readonly arcPathElementProvider: IElementProvider<SunburstItemTreeNode, SVGPathElement>;
 
   constructor(ref: React.MutableRefObject<SVGGElement | null>) {
-    this.arcPathElementProvider = ElementProvider<SunburstItemTreeNode, SVGGElement, SVGPathElement>(ref, ArcPathSelectorProvider<SunburstItem>);
+    this.arcPathElementProvider = ElementProvider<SunburstItemTreeNode, SVGGElement, SVGPathElement>(ref, arcPathSelectorProvider);
   }
 
   getForItem(item: HierarchyNode<SunburstItemTreeNode>): SVGPathElement[] {
