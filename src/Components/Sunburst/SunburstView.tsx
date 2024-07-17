@@ -14,28 +14,28 @@ export interface SunburstViewProps<TDatum> {
   radius?: number
   duration?: number
   items: HierarchyRectangularNode<TreeNode<TDatum>>[]
-  clickEvent?: SunburstEvent<TreeNode<TDatum>>
-  mouseEnterEvent?: SunburstEvent<TreeNode<TDatum>>
-  mouseLeaveEvent?: SunburstEvent<TreeNode<TDatum>>
+  onClick?: SunburstEvent<TreeNode<TDatum>>
+  onMouseEnter?: SunburstEvent<TreeNode<TDatum>>
+  onMouseLeave?: SunburstEvent<TreeNode<TDatum>>
   centerElement?: JSX.Element
   getHighlighter?: GetHighlighterMethod<TDatum>
   getArcColor: (d: HierarchyRectangularNode<TreeNode<TDatum>>) => string
-  arcIsClickable: (d: HierarchyRectangularNode<TreeNode<TDatum>>) => boolean
+  isArcClickable: (d: HierarchyRectangularNode<TreeNode<TDatum>>) => boolean
 }
 
 export default function SunburstView<TDatum>(props: SunburstViewProps<TDatum>): JSX.Element {
   const {
     id,
     radius = 20,
-    clickEvent,
     duration = 100,
     items,
-    mouseEnterEvent,
-    mouseLeaveEvent,
     centerElement,
+    onClick,
+    onMouseEnter,
+    onMouseLeave,
     getHighlighter,
     getArcColor,
-    arcIsClickable
+    isArcClickable
   } = props;
 
   const gElementRef = useRef<SVGGElement | null>(null);
@@ -47,29 +47,33 @@ export default function SunburstView<TDatum>(props: SunburstViewProps<TDatum>): 
 
     function mouseEnterHandler(event: MouseEvent, d: HierarchyNode<TreeNode<TDatum>>): void {
       highlighter?.highlight(d);
-      mouseEnterEvent?.(event, d);
+      onMouseEnter?.(event, d);
     }
 
     function mouseLeaveHandler(event: MouseEvent, d: HierarchyNode<TreeNode<TDatum>>): void {
       highlighter?.clear();
-      mouseLeaveEvent?.(event, d);
+      onMouseLeave?.(event, d);
     }
 
-    function clickEventHandler(event: MouseEvent, d: HierarchyNode<TreeNode<TDatum>>): void {
-      clickEvent?.(event, d);
+    function clickHandler(event: MouseEvent, d: HierarchyNode<TreeNode<TDatum>>): void {
+      onClick?.(event, d);
+    }
+
+    function getMouseArcPathClass(d: HierarchyRectangularNode<TreeNode<TDatum>>): string | null {
+      return isArcClickable(d) ? 'clickable' : null
     }
 
     return new SunburstController<TreeNode<TDatum>>(gElementRef,
       {
         duration,
         arcs,
-        clickEvent: clickEventHandler,
-        mouseEnterEvent: mouseEnterHandler,
-        mouseLeaveEvent: mouseLeaveHandler,
+        onClick: clickHandler,
+        onMouseEnter: mouseEnterHandler,
+        onMouseLeave: mouseLeaveHandler,
         getArcColor,
-        arcIsClickable
+        getMouseArcPathClass
       })
-  }, [arcs, clickEvent, duration, highlighter, mouseEnterEvent, mouseLeaveEvent]);
+  }, [arcs, duration, highlighter, onMouseEnter, onMouseLeave, onClick]);
 
   useLayoutEffect(() => {
     controller.initialize(items)

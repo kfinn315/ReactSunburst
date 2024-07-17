@@ -1,10 +1,9 @@
 import { HierarchyNode } from "d3";
-import ElementProvider from "../../Utils/ElementProvider/ElementProvider";
-import { IElementProvider } from '../../Utils/ElementProvider/IElementProvider';
+import { ElementProvider, IElementProvider } from "../../Utils/ElementProvider";
 import { SunburstItemTreeNode } from '../../Models/SunburstItemTreeNode';
 import { SunburstItem } from '../../Models/SunburstItem';
 import ArcPathSelectorProvider from "./ArcPathSelectorProvider";
-import getAncestorData from "../../Utils/getAncestorData";
+import { getHierarchyNodeAncestorData } from "../../Utils/getAncestorData";
 import { IElementsProvider } from "../Highlighter";
 
 
@@ -15,8 +14,9 @@ export default class AncestorElementProvider implements IElementsProvider<Hierar
     this.arcPathElementProvider = ElementProvider<SunburstItemTreeNode, SVGGElement, SVGPathElement>(ref, ArcPathSelectorProvider<SunburstItem>);
   }
 
-  forItem(item: HierarchyNode<SunburstItemTreeNode>): SVGPathElement[] {
-    return (getAncestorData(item) ?? []).map(this.arcPathElementProvider.forItem).filter(element => element != null) as SVGPathElement[]
+  getForItem(item: HierarchyNode<SunburstItemTreeNode>): SVGPathElement[] {
+    const NotNull = (element: SVGPathElement | null): boolean => element != null;
+    return getHierarchyNodeAncestorData(item).map(x => this.arcPathElementProvider.forItem(x)).filter(NotNull) as SVGPathElement[]
   }
 
   getAll(): SVGPathElement[] {

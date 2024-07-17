@@ -1,3 +1,4 @@
-import { TreePartitionLayout } from "./TreePartitionLayout";
+import { partitionTreeLayout } from "./partitionTreeLayout";
+import { getHierarchy } from './getHierarchy';
 
-export { TreePartitionLayout }
+export { partitionTreeLayout, getHierarchy }

@@ -5,9 +5,8 @@ import { IElementProvider, ISelectorProvider } from './Types';
  * @param TInput type of input item
  * @param TRef type of ref
  * @param TElement type of returned Element
- * @param ref 
- * @param getSelector 
- * @param allSelector 
+ * @param getElementForItem 
+ * @param getAll 
  * @returns 
  */
 export default function ElementProvider<TInput, TRef extends Element = Element, TElement extends Element = Element>(

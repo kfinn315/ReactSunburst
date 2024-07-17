@@ -1,4 +1,4 @@
-import BasicHighlighter from './BasicHighlighter';
+import getHighlighter from './getHighlighter';
 import { Highlighter, IElementsProvider } from './Types';
 
-export { BasicHighlighter, type Highlighter, type IElementsProvider }
+export { getHighlighter, type Highlighter, type IElementsProvider }

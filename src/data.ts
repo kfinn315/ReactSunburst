@@ -1,5 +1,4 @@
-import { SunburstItemNode } from './Models/SunburstItemNode';
-import { SunburstItem } from './Models/SunburstItem';
+import { SunburstItem, SunburstItemNode } from './Models';
 
 export const flatData: readonly SunburstItem[] = [
     { id: 0, name: '1', color: 0, size: 200 },

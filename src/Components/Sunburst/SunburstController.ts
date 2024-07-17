@@ -7,11 +7,11 @@ import { TreeNode } from '../../Services/Tree';
 export interface SunburstControllerProps<TNode> {
   duration: number
   arcs: Arcs
-  mouseEnterEvent: SunburstEvent<TNode>
-  mouseLeaveEvent: SunburstEvent<TNode>
-  clickEvent: SunburstEvent<TNode>
+  onMouseEnter: SunburstEvent<TNode>
+  onMouseLeave: SunburstEvent<TNode>
+  onClick: SunburstEvent<TNode>
   getArcColor: (d: HierarchyRectangularNode<TNode>) => string
-  arcIsClickable: (d: HierarchyRectangularNode<TNode>) => boolean
+  getMouseArcPathClass: (d: HierarchyRectangularNode<TNode>) => string | null
 }
 
 export default class SunburstController<TNode extends TreeNode<unknown>> {
@@ -23,20 +23,19 @@ export default class SunburstController<TNode extends TreeNode<unknown>> {
   #getID = (d: HierarchyRectangularNode<TNode>) => {
     return d.data.id;
   }
+  
   /**
    * Initializes and updates the sunburst chart based on the provided items data
-   * @param items 
-   * @returns 
    */
   initialize(items: HierarchyRectangularNode<TNode>[] = []): void {
     const {
       arcs: arcCollection,
-      arcIsClickable,
-      clickEvent,
+      getMouseArcPathClass,
+      onClick,
       duration,
       getArcColor,
-      mouseEnterEvent,
-      mouseLeaveEvent
+      onMouseEnter,
+      onMouseLeave
     } = this.props;
 
     if (!this.ref.current) {
@@ -73,7 +72,7 @@ export default class SunburstController<TNode extends TreeNode<unknown>> {
         .select('.mousearc')
         .attr('fill', 'none')
         .attr('pointer-events', 'all');
-      // .on('mouseleave', mouseleaveEvent)
+      // .on('mouseleave', onMouseLeave)
       const mousearcs = mouseGroup
         .selectAll<SVGPathElement, HierarchyRectangularNode<TNode>>('path')
         .data(items, this.#getID);
@@ -81,15 +80,15 @@ export default class SunburstController<TNode extends TreeNode<unknown>> {
       const mousearcsEnter = mousearcs
         .enter()
         .append('path')
-        .attr('class', (d) => (arcIsClickable(d) ? 'clickable' : null))
+        .attr('class', getMouseArcPathClass)
         .attr('data-id', this.#getID);
 
       mousearcsEnter
         .on('mouseenter', (ev: MouseEvent, d) => {
-          mouseEnterEvent(ev, d);
+          onMouseEnter(ev, d);
         })
-        .on('mouseout', (ev: MouseEvent, d) => { mouseLeaveEvent(ev, d); })
-        .on('click', (ev: MouseEvent, d) => { clickEvent(ev, d); })
+        .on('mouseout', (ev: MouseEvent, d) => { onMouseLeave(ev, d); })
+        .on('click', (ev: MouseEvent, d) => { onClick(ev, d); })
         .merge(mousearcs)
         .transition()
         .duration(duration)

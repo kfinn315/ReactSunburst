@@ -1,12 +1,9 @@
 import { TreeNode } from "../Tree";
 
 export default function ArcPathSelectorProvider<TData extends { id: unknown }>(item?: TreeNode<TData>): string {
-  let selector: string;
-  if (!item) { //select all paths
-    selector = '.arc>path';
+  if (item) {
+    return `.arc>path[data-id="${String(item.id)}"]`;
   }
-  else {
-    selector = `.arc>path[data-id="${String(item.id)}"]`;
-  }
-  return selector;
+
+  return '.arc>path'; //select all paths
 }

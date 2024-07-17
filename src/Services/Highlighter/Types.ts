@@ -11,8 +11,6 @@ export interface Highlighter<T> {
  * Provides Element lists for a specific item and all Elements
  */
 export interface IElementsProvider<T, E extends Element = Element> {
-    forItem: (item: T) => E[];
+    getForItem: (item: T) => E[];
     getAll: () => E[];
 }
-
-
