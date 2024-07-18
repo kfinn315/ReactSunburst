@@ -1,9 +1,9 @@
-import { HierarchyRectangularNode, select } from 'd3';
-import { MutableRefObject } from 'react';
+import { HierarchyRectangularNode, select } from 'd3'
+import { MutableRefObject } from 'react'
 
-import { Arcs } from '../../Services/Arcs';
-import { TreeNode } from '../../Services/Tree';
-import SunburstEvent from './Types';
+import { Arcs } from '../../Services/Arcs'
+import { TreeNode } from '../../Services/Tree'
+import SunburstEvent from './Types'
 
 export interface SunburstControllerProps<TNode> {
   duration: number
@@ -18,13 +18,13 @@ export interface SunburstControllerProps<TNode> {
 export default class SunburstController<TNode extends TreeNode<unknown>> {
   constructor(
     private readonly ref: MutableRefObject<SVGGElement | null>,
-    private readonly props: SunburstControllerProps<TNode>
-  ) { }
+    private readonly props: SunburstControllerProps<TNode>,
+  ) {}
 
   #getID = (d: HierarchyRectangularNode<TNode>) => {
-    return d.data.id;
+    return d.data.id
   }
-  
+
   /**
    * Initializes and updates the sunburst chart based on the provided items data
    */
@@ -36,25 +36,25 @@ export default class SunburstController<TNode extends TreeNode<unknown>> {
       duration,
       getArcColor,
       onMouseEnter,
-      onMouseLeave
-    } = this.props;
+      onMouseLeave,
+    } = this.props
 
     if (!this.ref.current) {
-      return;
+      return
     }
 
     const selection = select<SVGGElement, HierarchyRectangularNode<TNode>>(
-      this.ref.current
-    );
+      this.ref.current,
+    )
 
     const createArcs = () => {
-      const arcGroup = selection.select('.arc');
+      const arcGroup = selection.select('.arc')
 
       const arcs = arcGroup
         .selectAll<SVGPathElement, HierarchyRectangularNode<TNode>>('path')
-        .data(items, this.#getID);
+        .data(items, this.#getID)
 
-      const arcsEnter = arcs.enter().append('path');
+      const arcsEnter = arcs.enter().append('path')
 
       arcsEnter
         .merge(arcs)
@@ -62,9 +62,9 @@ export default class SunburstController<TNode extends TreeNode<unknown>> {
         .duration(duration)
         .attr('fill', getArcColor)
         .attr('d', arcCollection.padded)
-        .attr('data-id', this.#getID);
+        .attr('data-id', this.#getID)
 
-      arcs.exit().remove();
+      arcs.exit().remove()
     }
 
     const createMouseArcs = () => {
@@ -72,28 +72,32 @@ export default class SunburstController<TNode extends TreeNode<unknown>> {
       const mouseGroup = selection
         .select('.mousearc')
         .attr('fill', 'none')
-        .attr('pointer-events', 'all');
+        .attr('pointer-events', 'all')
       // .on('mouseleave', onMouseLeave)
       const mousearcs = mouseGroup
         .selectAll<SVGPathElement, HierarchyRectangularNode<TNode>>('path')
-        .data(items, this.#getID);
+        .data(items, this.#getID)
 
       const mousearcsEnter = mousearcs
         .enter()
         .append('path')
         .attr('class', getMouseArcPathClass)
-        .attr('data-id', this.#getID);
+        .attr('data-id', this.#getID)
 
       mousearcsEnter
         .on('mouseenter', (ev: MouseEvent, d) => {
-          onMouseEnter(ev, d);
+          onMouseEnter(ev, d)
         })
-        .on('mouseout', (ev: MouseEvent, d) => { onMouseLeave(ev, d); })
-        .on('click', (ev: MouseEvent, d) => { onClick(ev, d); })
+        .on('mouseout', (ev: MouseEvent, d) => {
+          onMouseLeave(ev, d)
+        })
+        .on('click', (ev: MouseEvent, d) => {
+          onClick(ev, d)
+        })
         .merge(mousearcs)
         .transition()
         .duration(duration)
-        .attr('d', arcCollection.basic);
+        .attr('d', arcCollection.basic)
 
       //animate arc removal - arc radii become zero (arcCollection.zero)
       mousearcs
@@ -101,12 +105,11 @@ export default class SunburstController<TNode extends TreeNode<unknown>> {
         .transition()
         .duration(duration)
         .attr('d', arcCollection.zero)
-        .remove();
+        .remove()
     }
 
-    createArcs();
+    createArcs()
 
-    createMouseArcs();
-
+    createMouseArcs()
   }
 }

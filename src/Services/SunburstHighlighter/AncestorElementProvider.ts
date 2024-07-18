@@ -1,24 +1,36 @@
-import { HierarchyNode } from 'd3';
+import { HierarchyNode } from 'd3'
 
-import { SunburstItemTreeNode } from '../../Models/SunburstItemTreeNode';
-import { ElementProvider, IElementProvider } from '../../Utils/ElementProvider';
-import { getHierarchyNodeAncestorData } from '../../Utils/getAncestorData';
-import { IElementsProvider } from '../Highlighter';
-import { arcPathSelectorProvider } from './ArcPathSelectorProvider';
+import { SunburstItemTreeNode } from '../../Models/SunburstItemTreeNode'
+import { ElementProvider, IElementProvider } from '../../Utils/ElementProvider'
+import { getHierarchyNodeAncestorData } from '../../Utils/getAncestorData'
+import { IElementsProvider } from '../Highlighter'
+import { arcPathSelectorProvider } from './ArcPathSelectorProvider'
+import { isNotNull } from './notNull'
 
-export default class AncestorElementProvider implements IElementsProvider<HierarchyNode<SunburstItemTreeNode>, SVGPathElement> {
-  private readonly arcPathElementProvider: IElementProvider<SunburstItemTreeNode, SVGPathElement>;
+export default class AncestorElementProvider
+  implements
+    IElementsProvider<HierarchyNode<SunburstItemTreeNode>, SVGPathElement>
+{
+  private readonly arcPathElementProvider: IElementProvider<
+    SunburstItemTreeNode,
+    SVGPathElement
+  >
 
   constructor(ref: React.MutableRefObject<SVGGElement | null>) {
-    this.arcPathElementProvider = ElementProvider<SunburstItemTreeNode, SVGGElement, SVGPathElement>(ref, arcPathSelectorProvider);
+    this.arcPathElementProvider = ElementProvider<
+      SunburstItemTreeNode,
+      SVGGElement,
+      SVGPathElement
+    >(ref, arcPathSelectorProvider)
   }
 
   getForItem(item: HierarchyNode<SunburstItemTreeNode>): SVGPathElement[] {
-    const NotNull = (element: SVGPathElement | null): boolean => element != null;
-    return getHierarchyNodeAncestorData(item).map(x => this.arcPathElementProvider.forItem(x)).filter(NotNull) as SVGPathElement[]
+    return getHierarchyNodeAncestorData(item)
+      .map((x) => this.arcPathElementProvider.get(x))
+      .filter((x) => isNotNull(x)) as SVGPathElement[]
   }
 
   getAll(): SVGPathElement[] {
-    return this.arcPathElementProvider.getAll();
+    return this.arcPathElementProvider.getAll()
   }
 }

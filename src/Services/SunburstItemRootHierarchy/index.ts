@@ -1,3 +1,3 @@
-import { getRootHierarchyNode } from './getRootHierarchy';
+import { getRootHierarchyNode } from './getRootHierarchy'
 
 export { getRootHierarchyNode }

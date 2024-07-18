@@ -1,4 +1,4 @@
-import { Arc } from 'd3';
+import { Arc } from 'd3'
 
 export interface Arcs {
   padded: Arc<unknown, ArcCoordinates>

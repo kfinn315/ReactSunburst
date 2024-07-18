@@ -1,6 +1,6 @@
-import { Arc, arc } from 'd3';
+import { Arc, arc } from 'd3'
 
-import { ArcCoordinates } from './Types';
+import { ArcCoordinates } from './Types'
 
 /**
  * Get Arc with radius
@@ -12,8 +12,9 @@ import { ArcCoordinates } from './Types';
  * @returns An Arc generator function.
  */
 
-export const getArc = (radius: number): Arc<unknown, ArcCoordinates> => arc<unknown, ArcCoordinates>()
-  .startAngle((d) => d.x0)
-  .endAngle((d) => d.x1)
-  .innerRadius((d) => Math.sqrt(d.y0))
-  .outerRadius(radius);
+export const getArc = (radius: number): Arc<unknown, ArcCoordinates> =>
+  arc<unknown, ArcCoordinates>()
+    .startAngle((d) => d.x0)
+    .endAngle((d) => d.x1)
+    .innerRadius((d) => Math.sqrt(d.y0))
+    .outerRadius(radius)

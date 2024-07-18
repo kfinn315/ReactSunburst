@@ -1,4 +1,4 @@
-import ArcGroup from './ArcGroup';
-import { ArcCoordinates, Arcs } from './Types';
+import ArcGroup from './ArcGroup'
+import { ArcCoordinates, Arcs } from './Types'
 
-export { ArcGroup, type ArcCoordinates, type Arcs };
+export { ArcGroup, type ArcCoordinates, type Arcs }
