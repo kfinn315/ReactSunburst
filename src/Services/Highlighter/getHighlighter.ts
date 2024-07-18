@@ -1,7 +1,7 @@
 import { HierarchyNode } from 'd3'
 
 import CollectionClassModifier from '../../Utils/CSSClassModifier/CollectionClassModifier'
-import { Highlighter, ElementListProvider } from './Types'
+import { ElementListProvider, Highlighter } from './Types'
 
 /**
  * Adds the "highlight" class to the html elements given by the elementProvider
