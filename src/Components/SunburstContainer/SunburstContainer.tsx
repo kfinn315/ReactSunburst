@@ -1,14 +1,16 @@
-import { useState } from "react";
-import { HierarchyNode, HierarchyRectangularNode, min, ScaleLinear } from "d3";
-import { SunburstItemTreeNode } from "../../Models";
-import SunburstEvent from "../Sunburst/Types";
+import './SunburstContainer.css';
+
+import { HierarchyNode, HierarchyRectangularNode, min, ScaleLinear } from 'd3';
+import { useState } from 'react';
+
+import { SunburstItemTreeNode } from '../../Models';
 import { SunburstItem } from '../../Models/SunburstItem';
-import { Sunburst } from "../Sunburst";
-import "./SunburstContainer.css";
-import { GetHighlighterMethod } from "../../Services/SunburstHighlighter";
-import { TreeNode } from "../../Services/Tree";
-import BoxDimensions from "../../Types/BoxDimensions";
-import { partitionTreeLayout } from "../../Services/PartitionLayout";
+import { partitionTreeLayout } from '../../Services/PartitionLayout';
+import { GetHighlighterMethod } from '../../Services/SunburstHighlighter';
+import { TreeNode } from '../../Services/Tree';
+import BoxDimensions from '../../Types/BoxDimensions';
+import { Sunburst } from '../Sunburst';
+import SunburstEvent from '../Sunburst/Types';
 
 export interface SunburstContainerProps {
     dimensions: BoxDimensions

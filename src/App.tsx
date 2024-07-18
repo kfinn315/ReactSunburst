@@ -1,10 +1,12 @@
-import './App.css'
+import './App.css';
+
 import { max, min, scaleLinear } from 'd3';
 import { JSONTree } from 'react-json-tree';
-import { flatData } from './data';
-import { getRootHierarchyNode } from './Services/SunburstItemRootHierarchy';
+
 import { SunburstContainer } from './Components/SunburstContainer';
+import { flatData } from './data';
 import { createSunburstHighlighter } from './Services/SunburstHighlighter';
+import { getRootHierarchyNode } from './Services/SunburstItemRootHierarchy';
 
 function App() {
 

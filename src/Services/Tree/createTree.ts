@@ -1,6 +1,6 @@
-import { addSegmentToTreeNodeRecursively } from "./addSegmentToTreeNodeRecursively";
-import { idGenerator } from "./idGenerator";
-import { SegmentNode, TreeNode } from "./Types";
+import { addSegmentToTreeNodeRecursively } from './addSegmentToTreeNodeRecursively';
+import { idGenerator } from './idGenerator';
+import { SegmentNode, TreeNode } from './Types';
 
 /**
  * Create a tree data structure by adding SegmentNode items to a root node

@@ -1,4 +1,5 @@
 import { MutableRefObject } from 'react';
+
 import { IElementProvider, SelectorProvider } from './Types';
 
 /**

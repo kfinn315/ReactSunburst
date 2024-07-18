@@ -1,7 +1,8 @@
 import { HierarchyNode } from 'd3';
-import { SegmentNode, TreeNode, createTree } from "../Tree";
+
 import { SunburstItem, SunburstItemTreeNode } from '../../Models';
 import { getHierarchy } from '../PartitionLayout/getHierarchy';
+import { createTree, SegmentNode, TreeNode } from '../Tree';
 
 function getSegments(item: SunburstItem): string[] {
     return item.name.split('.');

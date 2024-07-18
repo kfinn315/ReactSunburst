@@ -1,4 +1,4 @@
-import CssClassModifier from "./CssClassModifier";
+import CssClassModifier from './CssClassModifier';
 
 export interface ICollectionClassModifier {
     remove: (elements: Element[]) => void

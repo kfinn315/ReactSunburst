@@ -1,13 +1,14 @@
 import './Sunburst.css';
 
-import { useLayoutEffect, useMemo, useRef } from 'react';
 import { HierarchyNode, HierarchyRectangularNode } from 'd3';
+import { useLayoutEffect, useMemo, useRef } from 'react';
+
+import { ArcGroup, Arcs } from '../../Services/Arcs';
+import { Highlighter } from '../../Services/Highlighter';
+import { GetHighlighterMethod } from '../../Services/SunburstHighlighter';
+import { TreeNode } from '../../Services/Tree';
 import SunburstController from './SunburstController';
 import SunburstEvent from './Types';
-import { ArcGroup, Arcs } from '../../Services/Arcs';
-import { TreeNode } from '../../Services/Tree';
-import { Highlighter } from "../../Services/Highlighter";
-import { GetHighlighterMethod } from "../../Services/SunburstHighlighter";
 
 export interface SunburstViewProps<TDatum> {
   id?: string
