@@ -2,8 +2,8 @@ import { HierarchyRectangularNode, select } from 'd3'
 import { MutableRefObject } from 'react'
 
 import { Arcs } from '../../Services/Arcs'
-import { TreeNode } from '../../Services/Tree'
-import SunburstEvent from './Types'
+import { TreeNode } from '../../Services/TreeCreator'
+import { SunburstEvent } from './Types'
 
 export interface SunburstControllerProps<TNode> {
   duration: number

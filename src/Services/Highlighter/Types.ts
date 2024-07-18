@@ -9,7 +9,10 @@ export interface Highlighter<T> {
 /**
  * Provides Element lists for a specific item and all Elements
  */
-export interface IElementsProvider<T, TElement extends Element = Element> {
-  getForItem: (item: T) => TElement[]
+export interface ElementListProvider<
+  TInput,
+  TElement extends Element = Element,
+> {
+  get: (item: TInput) => TElement[]
   getAll: () => TElement[]
 }

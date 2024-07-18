@@ -1,4 +1,4 @@
 import getHighlighter from './getHighlighter'
-import { Highlighter, IElementsProvider } from './Types'
+import { Highlighter, ElementListProvider } from './Types'
 
-export { getHighlighter, type Highlighter, type IElementsProvider }
+export { getHighlighter, type Highlighter, type ElementListProvider }

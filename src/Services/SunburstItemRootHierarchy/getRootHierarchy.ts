@@ -1,22 +1,28 @@
 import { HierarchyNode } from 'd3'
 
 import { SunburstItem, SunburstItemTreeNode } from '../../Models'
-import { getHierarchy } from '../PartitionLayout/getHierarchy'
-import { createTree, SegmentNode, TreeNode } from '../Tree'
+import { createTree, SegmentNode, TreeNode } from '../TreeCreator'
+import { getHierarchy } from './getHierarchy'
 
 function getSegments(item: SunburstItem): string[] {
   return item.name.split('.')
 }
 
-function getSunburstItemNodeValue(d: SunburstItemTreeNode) {
+function getValue(d: SunburstItemTreeNode) {
   return d.data?.size ?? 0
 }
 
-function sortSunburstItemByDataSize(
+function sortByValue(
   nodeA: HierarchyNode<SunburstItemTreeNode>,
   nodeB: HierarchyNode<SunburstItemTreeNode>,
 ) {
-  return (nodeB.data.data?.size ?? 0) - (nodeA.data.data?.size ?? 0)
+  return getValue(nodeB.data) - getValue(nodeA.data)
+}
+
+function getHierarchyNode(
+  root: TreeNode<SunburstItem>,
+): HierarchyNode<TreeNode<SunburstItem>> {
+  return getHierarchy(root).sum(getValue).sort(sortByValue)
 }
 
 export function getRootHierarchyNode(
@@ -26,8 +32,6 @@ export function getRootHierarchyNode(
     data: item,
     segments: getSegments(item),
   }))
-  const rootTreeNode = createTree<SunburstItem>(segmentNodes)
-  return getHierarchy(rootTreeNode)
-    .sum(getSunburstItemNodeValue)
-    .sort(sortSunburstItemByDataSize)
+  const root = createTree<SunburstItem>(segmentNodes)
+  return getHierarchyNode(root)
 }

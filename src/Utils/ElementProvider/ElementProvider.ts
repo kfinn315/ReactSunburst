@@ -10,7 +10,7 @@ import { IElementProvider, SelectorProvider } from './Types'
  * @param getAll
  * @returns
  */
-export default function getElementProvider<
+export function getElementProvider<
   TInput,
   TRef extends Element = Element,
   TElement extends Element = Element,
@@ -18,7 +18,7 @@ export default function getElementProvider<
   ref: MutableRefObject<TRef | null>,
   selectorProvider: SelectorProvider<TInput>,
 ): IElementProvider<TInput, TElement> {
-  function getElementForItem(item: TInput): TElement | null {
+  function get(item: TInput): TElement | null {
     if (item == undefined) {
       return null
     }
@@ -35,5 +35,5 @@ export default function getElementProvider<
     ]
   }
 
-  return { get: getElementForItem, getAll }
+  return { get, getAll }
 }

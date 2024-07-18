@@ -6,9 +6,9 @@ import { useLayoutEffect, useMemo, useRef } from 'react'
 import { ArcGroup, Arcs } from '../../Services/Arcs'
 import { Highlighter } from '../../Services/Highlighter'
 import { GetHighlighterMethod } from '../../Services/SunburstHighlighter'
-import { TreeNode } from '../../Services/Tree'
+import { TreeNode } from '../../Services/TreeCreator'
 import SunburstController from './SunburstController'
-import SunburstEvent from './Types'
+import { SunburstEvent } from './Types'
 
 export interface SunburstViewProps<TDatum> {
   id?: string

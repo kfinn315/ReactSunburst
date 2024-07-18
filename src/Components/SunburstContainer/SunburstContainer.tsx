@@ -3,14 +3,12 @@ import './SunburstContainer.css'
 import { HierarchyNode, HierarchyRectangularNode, min, ScaleLinear } from 'd3'
 import { useState } from 'react'
 
-import { SunburstItemTreeNode } from '../../Models'
-import { SunburstItem } from '../../Models/SunburstItem'
-import { GetHighlighterMethod } from '../../Services/SunburstHighlighter'
-import { TreeNode } from '../../Services/Tree'
-import BoxDimensions from '../../Types/BoxDimensions'
-import { Sunburst } from '../Sunburst'
-import SunburstEvent from '../Sunburst/Types'
+import { SunburstItem, SunburstItemTreeNode } from '../../Models'
 import { getPartitionTreeLayout } from '../../Services/PartitionLayout'
+import { GetHighlighterMethod } from '../../Services/SunburstHighlighter'
+import { TreeNode } from '../../Services/TreeCreator'
+import { BoxDimensions } from '../../Types/BoxDimensions'
+import { Sunburst, SunburstEvent } from '../Sunburst'
 
 export interface SunburstContainerProps {
   dimensions: BoxDimensions

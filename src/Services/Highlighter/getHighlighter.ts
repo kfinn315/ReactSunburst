@@ -1,7 +1,7 @@
 import { HierarchyNode } from 'd3'
 
 import CollectionClassModifier from '../../Utils/CSSClassModifier/CollectionClassModifier'
-import { Highlighter, IElementsProvider } from './Types'
+import { Highlighter, ElementListProvider } from './Types'
 
 /**
  * Adds the "highlight" class to the html elements given by the elementProvider
@@ -12,7 +12,7 @@ export default function getHighlighter<
   TDatum,
   TElement extends Element = Element,
 >(
-  elementProvider: IElementsProvider<HierarchyNode<TDatum>, TElement>,
+  elementProvider: ElementListProvider<HierarchyNode<TDatum>, TElement>,
 ): Highlighter<HierarchyNode<TDatum>> {
   const highlighter = new CollectionClassModifier('highlight')
 
@@ -21,7 +21,7 @@ export default function getHighlighter<
       highlighter.remove(elementProvider.getAll())
     },
     highlight: (hierarchyNode: HierarchyNode<TDatum>) => {
-      const pathElements = elementProvider.getForItem(hierarchyNode)
+      const pathElements = elementProvider.get(hierarchyNode)
       highlighter.add(pathElements)
     },
   }

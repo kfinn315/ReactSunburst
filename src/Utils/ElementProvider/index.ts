@@ -1,4 +1,4 @@
-import getElementProvider from './ElementProvider'
+import { getElementProvider } from './ElementProvider'
 import { IElementProvider, SelectorProvider } from './Types'
 
 export {

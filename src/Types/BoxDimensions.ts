@@ -1,4 +1,4 @@
-export default interface BoxDimensions {
+export interface BoxDimensions {
   width: number
   height: number
 }

@@ -1,6 +1,6 @@
 import { hierarchy, HierarchyNode } from 'd3'
 
-import { TreeNode } from '../Tree'
+import { TreeNode } from '../TreeCreator'
 
 export function getHierarchy<TData>(
   root: TreeNode<TData>,
