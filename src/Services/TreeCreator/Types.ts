@@ -5,7 +5,7 @@ export interface SegmentNode<TData> {
 
 export interface TreeNode<TData> {
   id: number
-  name: string | null
+  name?: string
   data?: TData
   children: TreeNode<TData>[]
 }

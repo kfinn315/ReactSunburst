@@ -1,5 +1,6 @@
 import { addSegmentToTreeNodeRecursively } from './addSegmentToTreeNodeRecursively'
-import { getIDGenerator } from './idGenerator'
+import { Nodey } from './Nodey'
+import { getIDGenerator } from './getIDGenerator'
 import { SegmentNode, TreeNode } from './Types'
 
 /**
@@ -14,19 +15,19 @@ export default function createTree<TData>(
 
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const id = myIDGenerator.next().value!
+  const rootNode = new Nodey<TData>(id, 'root')
 
-  const root: TreeNode<TData> = { id, name: 'root', children: [] }
   items.forEach((item) => {
     const segmentIterator = item.segments.values()
     const data = item.data
 
     addSegmentToTreeNodeRecursively({
       idGenerator: myIDGenerator,
-      data,
       segmentIterator,
-      treeNode: root,
+      data,
+      node: rootNode,
     })
   })
 
-  return root
+  return rootNode
 }

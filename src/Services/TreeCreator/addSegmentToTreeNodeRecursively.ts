@@ -1,32 +1,31 @@
-import { findNode } from './findNode'
-import { TreeNode } from './Types'
+import { Nodey } from './Nodey'
 
 interface Props<TNode> {
   idGenerator: Generator<number, void>
-  treeNode: TreeNode<TNode> | null
   segmentIterator: IterableIterator<string>
+  node: Nodey<TNode>
   data: TNode
 }
 
 export function addSegmentToTreeNodeRecursively<TNode>({
   idGenerator,
-  treeNode,
   segmentIterator,
+  node,
   data,
 }: Props<TNode>) {
-  if (treeNode === null) {
-    throw Error('treeNode is null')
+  if (node === null) {
+    throw Error('node is null')
   }
 
   const nextSegment = segmentIterator.next()
 
   if (nextSegment.done) {
     //end of segments, set segment.data to node.data and end recursion by returningF
-    treeNode.data = data
+    node.data = data
   } else {
     const nextSegmentName = nextSegment.value
 
-    let childNode = findNode(treeNode.children, nextSegmentName)
+    let childNode = node.getChild(nextSegmentName)
 
     if (childNode === undefined) {
       //create new node and add to children
@@ -36,14 +35,15 @@ export function addSegmentToTreeNodeRecursively<TNode>({
         throw Error('idGenerator should never be done')
       }
 
-      childNode = { id: nextID.value, name: nextSegmentName, children: [] }
-      treeNode.children.push(childNode)
+      childNode = new Nodey<TNode>(nextID.value, nextSegmentName)
+      node.addChild(childNode)
+      // addNodeToChildren(node, childNode)
     }
 
     addSegmentToTreeNodeRecursively({
       idGenerator,
-      treeNode: childNode,
       segmentIterator,
+      node: childNode,
       data,
     })
   }
