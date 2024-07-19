@@ -5,22 +5,20 @@ import { useState } from 'react'
 
 import { SunburstItem, SunburstItemTreeNode } from '../../Models'
 import { getPartitionTreeLayout } from '../../Services/PartitionLayout'
-import { GetHighlighterMethod } from '../../Services/SunburstHighlighter'
 import { TreeNode } from '../../Services/TreeCreator'
 import { BoxDimensions } from '../../Types/BoxDimensions'
 import { Sunburst, SunburstEvent } from '../Sunburst'
+import { HighlighterWrapper } from '../../Services/Highlighter/HighlighterWrapper'
 
 export interface SunburstContainerProps {
   dimensions: BoxDimensions
-  id?: string
   minWidth?: number
   duration?: number
   rootNode: HierarchyNode<TreeNode<SunburstItem>>
   onClick?: SunburstEvent<SunburstItemTreeNode>
   onMouseEnter?: SunburstEvent<SunburstItemTreeNode>
   onMouseLeave?: SunburstEvent<SunburstItemTreeNode>
-  centerElement?: JSX.Element
-  getHighlighter?: GetHighlighterMethod<SunburstItem>
+  highlighter?: HighlighterWrapper<SunburstItem>
   colorScale: ScaleLinear<string, string>
   centerColor: string
 }
@@ -28,7 +26,7 @@ export interface SunburstContainerProps {
 export function SunburstContainer({
   dimensions,
   rootNode,
-  getHighlighter,
+  highlighter,
   onMouseEnter,
   onMouseLeave,
   colorScale,
@@ -58,14 +56,14 @@ export function SunburstContainer({
       .ancestors()
       .map((x) => x.data.name ?? '?')
       .reverse()
-      .slice(1)
+      .slice(1) //remove "root"
       .join('.')
   }
 
   const mouseEnterHandler: SunburstEvent<SunburstItemTreeNode> = (
     event: MouseEvent,
     d: HierarchyNode<SunburstItemTreeNode>,
-  ): void => {
+  ) => {
     setDetail(getItemDetail(d))
     onMouseEnter?.(event, d)
   }
@@ -84,7 +82,7 @@ export function SunburstContainer({
           viewBox={`0 0 ${String(svgDimension)} ${String(svgDimension)}`}
         >
           <Sunburst<SunburstItem>
-            getHighlighter={getHighlighter}
+            highlighter={highlighter}
             getArcColor={getArcColor}
             radius={radius}
             items={nodes}

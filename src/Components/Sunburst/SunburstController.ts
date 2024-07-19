@@ -2,7 +2,6 @@ import { HierarchyRectangularNode, select } from 'd3'
 import { MutableRefObject } from 'react'
 
 import { Arcs } from '../../Services/Arcs'
-import { TreeNode } from '../../Services/TreeCreator'
 import { SunburstEvent } from './Types'
 
 export interface SunburstControllerProps<TNode> {
@@ -13,17 +12,14 @@ export interface SunburstControllerProps<TNode> {
   onClick: SunburstEvent<TNode>
   getArcColor: (d: HierarchyRectangularNode<TNode>) => string
   getMouseArcPathClass: (d: HierarchyRectangularNode<TNode>) => string | null
+  getNodeID: (d: HierarchyRectangularNode<TNode>) => number
 }
 
-export default class SunburstController<TNode extends TreeNode<unknown>> {
+export class SunburstController<TNode> {
   constructor(
     private readonly ref: MutableRefObject<SVGGElement | null>,
     private readonly props: SunburstControllerProps<TNode>,
   ) {}
-
-  #getID = (d: HierarchyRectangularNode<TNode>) => {
-    return d.data.id
-  }
 
   /**
    * Initializes and updates the sunburst chart based on the provided items data
@@ -37,6 +33,7 @@ export default class SunburstController<TNode extends TreeNode<unknown>> {
       getArcColor,
       onMouseEnter,
       onMouseLeave,
+      getNodeID,
     } = this.props
 
     if (!this.ref.current) {
@@ -52,7 +49,7 @@ export default class SunburstController<TNode extends TreeNode<unknown>> {
 
       const arcs = arcGroup
         .selectAll<SVGPathElement, HierarchyRectangularNode<TNode>>('path')
-        .data(items, this.#getID)
+        .data(items, getNodeID)
 
       const arcsEnter = arcs.enter().append('path')
 
@@ -62,7 +59,7 @@ export default class SunburstController<TNode extends TreeNode<unknown>> {
         .duration(duration)
         .attr('fill', getArcColor)
         .attr('d', arcCollection.padded)
-        .attr('data-id', this.#getID)
+        .attr('data-id', getNodeID)
 
       arcs.exit().remove()
     }
@@ -74,15 +71,16 @@ export default class SunburstController<TNode extends TreeNode<unknown>> {
         .attr('fill', 'none')
         .attr('pointer-events', 'all')
       // .on('mouseleave', onMouseLeave)
+
       const mousearcs = mouseGroup
         .selectAll<SVGPathElement, HierarchyRectangularNode<TNode>>('path')
-        .data(items, this.#getID)
+        .data(items, getNodeID)
 
       const mousearcsEnter = mousearcs
         .enter()
         .append('path')
         .attr('class', getMouseArcPathClass)
-        .attr('data-id', this.#getID)
+        .attr('data-id', getNodeID)
 
       mousearcsEnter
         .on('mouseenter', (ev: MouseEvent, d) => {

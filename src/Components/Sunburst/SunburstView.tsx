@@ -4,48 +4,46 @@ import { HierarchyNode, HierarchyRectangularNode } from 'd3'
 import { useLayoutEffect, useMemo, useRef } from 'react'
 
 import { ArcGroup, Arcs } from '../../Services/Arcs'
-import { Highlighter } from '../../Services/Highlighter'
-import { GetHighlighterMethod } from '../../Services/SunburstHighlighter'
 import { TreeNode } from '../../Services/TreeCreator'
-import SunburstController from './SunburstController'
+import { SunburstController } from './SunburstController'
 import { SunburstEvent } from './Types'
+import { HighlighterWrapper } from '../../Services/Highlighter'
 
 export interface SunburstViewProps<TDatum> {
-  id?: string
-  radius?: number
-  duration?: number
+  radius: number
   items: HierarchyRectangularNode<TreeNode<TDatum>>[]
+  getArcColor: (d: HierarchyRectangularNode<TreeNode<TDatum>>) => string
+  isArcClickable: (d: HierarchyRectangularNode<TreeNode<TDatum>>) => boolean
+  duration?: number
   onClick?: SunburstEvent<TreeNode<TDatum>>
   onMouseEnter?: SunburstEvent<TreeNode<TDatum>>
   onMouseLeave?: SunburstEvent<TreeNode<TDatum>>
   centerElement?: JSX.Element
-  getHighlighter?: GetHighlighterMethod<TDatum>
-  getArcColor: (d: HierarchyRectangularNode<TreeNode<TDatum>>) => string
-  isArcClickable: (d: HierarchyRectangularNode<TreeNode<TDatum>>) => boolean
+  highlighter?: HighlighterWrapper<TDatum>
 }
 
 export default function SunburstView<TDatum>(
   props: SunburstViewProps<TDatum>,
 ): JSX.Element {
   const {
-    id,
-    radius = 20,
-    duration = 100,
+    radius,
     items,
+    getArcColor,
+    isArcClickable,
+    duration = 100,
     centerElement,
     onClick,
     onMouseEnter,
     onMouseLeave,
-    getHighlighter,
-    getArcColor,
-    isArcClickable,
+    highlighter,
   } = props
 
   const gElementRef = useRef<SVGGElement | null>(null)
   const arcs: Arcs = new ArcGroup(radius)
 
-  const highlighter: Highlighter<HierarchyNode<TreeNode<TDatum>>> | undefined =
-    getHighlighter?.(gElementRef)
+  if (highlighter) {
+    highlighter.setRef(gElementRef)
+  }
 
   const controller = useMemo(() => {
     function mouseEnterHandler(
@@ -85,6 +83,9 @@ export default function SunburstView<TDatum>(
       onMouseLeave: mouseLeaveHandler,
       getArcColor,
       getMouseArcPathClass,
+      getNodeID: (d: HierarchyRectangularNode<TreeNode<TDatum>>) => {
+        return d.data.id
+      },
     })
   }, [arcs, duration, highlighter, onMouseEnter, onMouseLeave, onClick])
 
@@ -94,7 +95,6 @@ export default function SunburstView<TDatum>(
 
   return (
     <g
-      id={id}
       ref={gElementRef}
       preserveAspectRatio="xMinYMin meet"
       transform={`translate(${String(radius)},${String(radius)})`}
