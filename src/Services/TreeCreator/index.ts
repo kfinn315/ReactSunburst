@@ -1,4 +1,4 @@
 import createTree from './createTree'
-import { SegmentNode, TreeNode } from './Types'
+import { TreeNode } from './Types'
 
-export { createTree, type SegmentNode, type TreeNode }
+export { createTree, type TreeNode }
