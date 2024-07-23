@@ -3,5 +3,4 @@ export interface SunburstItem {
   name: string
   color: number
   size: number
-  isClickable?: boolean
 }
