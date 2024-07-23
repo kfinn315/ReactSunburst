@@ -5,7 +5,7 @@ import { useLayoutEffect, useMemo, useRef } from 'react'
 
 import { ArcGroup, Arcs } from '../../Services/Arcs'
 import { TreeNode } from '../../Services/TreeCreator'
-import { SunburstController } from './SunburstController'
+import { SunburstViewController } from './SunburstViewController'
 import { SunburstEvent } from './Types'
 import { HighlighterWrapper } from '../../Services/Highlighter'
 
@@ -75,7 +75,7 @@ export default function SunburstView<TDatum>(
       return isArcClickable(d) ? 'clickable' : null
     }
 
-    return new SunburstController<TreeNode<TDatum>>(gElementRef, {
+    return new SunburstViewController<TreeNode<TDatum>>(gElementRef, {
       duration,
       arcs,
       onClick: clickHandler,

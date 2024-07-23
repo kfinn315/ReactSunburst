@@ -4,7 +4,7 @@ import { MutableRefObject } from 'react'
 import { Arcs } from '../../Services/Arcs'
 import { SunburstEvent } from './Types'
 
-export interface SunburstControllerProps<TNode> {
+export interface SunburstViewControllerProps<TNode> {
   duration: number
   arcs: Arcs
   onMouseEnter: SunburstEvent<TNode>
@@ -15,10 +15,10 @@ export interface SunburstControllerProps<TNode> {
   getNodeID: (d: HierarchyRectangularNode<TNode>) => number
 }
 
-export class SunburstController<TNode> {
+export class SunburstViewController<TNode> {
   constructor(
     private readonly ref: MutableRefObject<SVGGElement | null>,
-    private readonly props: SunburstControllerProps<TNode>,
+    private readonly props: SunburstViewControllerProps<TNode>,
   ) {}
 
   /**
