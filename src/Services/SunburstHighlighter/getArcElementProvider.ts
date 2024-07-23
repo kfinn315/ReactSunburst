@@ -1,16 +1,13 @@
-import { SunburstItemTreeNode } from '../../Models'
-import { getElementProvider } from '../../Utils/ElementProvider/ElementProvider'
+import { SunburstItemTreeNode } from '../../Types'
+import { getElementProvider } from '../../Utils/ElementProvider/getElementProvider'
 import { arcSelectorProvider } from './arcSelectorProvider'
 
 export function getArcElementProvider(
   ref: React.MutableRefObject<SVGGElement | null>,
 ) {
-  const selectorProvider = arcSelectorProvider
+  const selectors = arcSelectorProvider
 
-  const arcElementProvider = getElementProvider<
-    SunburstItemTreeNode,
-    SVGGElement,
-    SVGPathElement
-  >(ref, selectorProvider)
+  const arcElementProvider = getElementProvider<SunburstItemTreeNode, SVGGElement, SVGPathElement>(ref, selectors)
+
   return arcElementProvider
 }
