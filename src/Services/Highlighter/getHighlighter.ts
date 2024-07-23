@@ -14,15 +14,15 @@ export default function getHighlighter<
 >(
   elementProvider: ElementListProvider<HierarchyNode<TDatum>, TElement>,
 ): Highlighter<HierarchyNode<TDatum>> {
-  const highlighter = new CollectionClassModifier('highlight')
+  const classModifier = new CollectionClassModifier('highlight')
 
   return {
     clear: () => {
-      highlighter.remove(elementProvider.getAll())
+      classModifier.remove(elementProvider.getAll())
     },
     highlight: (hierarchyNode: HierarchyNode<TDatum>) => {
       const pathElements = elementProvider.get(hierarchyNode)
-      highlighter.add(pathElements)
+      classModifier.add(pathElements)
     },
   }
 }
