@@ -3,7 +3,7 @@ import './SunburstContainer.css'
 import { HierarchyNode, HierarchyRectangularNode, min, ScaleLinear } from 'd3'
 import { useState } from 'react'
 
-import { SunburstItem, SunburstItemTreeNode } from '../../Models'
+import { SunburstItem, SunburstItemTreeNode } from '../../Types'
 import { getPartitionTreeLayout } from '../../Services/PartitionLayout'
 import { TreeNode } from '../../Services/TreeCreator'
 import { BoxDimensions } from '../../Types/BoxDimensions'
@@ -36,7 +36,7 @@ export function SunburstContainer({
 }: SunburstContainerProps) {
   const [detail, setDetail] = useState<string | undefined>()
 
-  const svgDimension = min([dimensions.height, dimensions.width]) ?? minWidth
+  const svgDimension = getSVGDimensions(dimensions, minWidth)
   const radius = svgDimension / 2
   const sunburstDimensions: BoxDimensions = {
     width: 2 * Math.PI,
@@ -98,4 +98,8 @@ export function SunburstContainer({
       </div>
     </div>
   )
+}
+
+export function getSVGDimensions(dimensions: BoxDimensions, minWidth: number) {
+  return min([dimensions.height, dimensions.width]) ?? minWidth
 }
