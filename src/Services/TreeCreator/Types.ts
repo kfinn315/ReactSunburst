@@ -6,7 +6,6 @@ export interface TreeNode<TData> {
   children: TreeNode<TData>[]
 }
 
-
 export interface IDGenerator {
   next(): number;
 }

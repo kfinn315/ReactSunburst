@@ -5,7 +5,7 @@ import { JSONTree } from 'react-json-tree'
 import { SunburstContainer } from './Components/SunburstContainer'
 import { flatData } from './data'
 import { getSunburstHighlighterMethod } from './Services/SunburstHighlighter'
-import { getRootHierarchyNode } from './Services/SunburstItemRootHierarchy'
+import { getRootHierarchyNodeForFlatData } from './Services/SunburstItemRootHierarchyNode'
 import { HighlighterWrapper } from './Services/Highlighter/HighlighterWrapper'
 import { getColorScale } from './Utils/getColorScale'
 
@@ -17,7 +17,7 @@ function App() {
 
     const svgDimension = 1400
 
-    const rootHierarchyNode = getRootHierarchyNode(flatData)
+    const rootHierarchyNode = getRootHierarchyNodeForFlatData(flatData)
 
     return (
         <div className="content">

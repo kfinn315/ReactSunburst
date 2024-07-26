@@ -1,4 +1,4 @@
-import createTree from './createTree'
+import createTree, { CreateTreeMethod } from './createTree'
 import { TreeNode } from './Types'
 
-export { createTree, type TreeNode }
+export { createTree, type CreateTreeMethod, type TreeNode }
