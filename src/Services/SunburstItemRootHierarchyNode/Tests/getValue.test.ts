@@ -1,5 +1,4 @@
-//@ts-nocheck
-
+import { mock } from "jest-mock-extended"
 import { SunburstItem } from "../../../Types"
 import { TreeNode } from "../../TreeCreator"
 import { getValue } from '../getValue'
@@ -7,12 +6,9 @@ import { getValue } from '../getValue'
 describe('getValue', () => {
   it('should return the size of the data property if it exists', () => {
     // Arrange
-    const node: TreeNode<SunburstItem> = {
-      id: 1,
-      name: 'Node',
-      data: { size: 100 },
-      children: [],
-    }
+    const node = mock<TreeNode<SunburstItem>>({
+      data: mock<SunburstItem>({ size: 100 }),
+    })
 
     // Act
     const result = getValue(node)
@@ -23,11 +19,9 @@ describe('getValue', () => {
 
   it('should return 0 if the data property does not exist', () => {
     // Arrange
-    const node: TreeNode<SunburstItem> = {
-      id: 1,
-      name: 'Node',
-      children: [],
-    }
+    const node: TreeNode<SunburstItem> = mock<TreeNode<SunburstItem>>({
+      data: undefined
+    })
 
     // Act
     const result = getValue(node)

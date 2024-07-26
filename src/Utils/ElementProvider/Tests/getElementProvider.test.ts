@@ -59,7 +59,6 @@ describe('getElementProvider', () => {
     };
     let querySelectorSpy: unknown
     beforeEach(() => {
-        // MockElement = document.createElement("a");
         querySelectorSpy = jest.spyOn<Element>(MockElement, "querySelector")
     })
 

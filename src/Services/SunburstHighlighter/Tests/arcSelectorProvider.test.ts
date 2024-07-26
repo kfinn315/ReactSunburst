@@ -1,5 +1,6 @@
-// @ts-nocheck
+import { mock } from 'jest-mock-extended'
 import { arcSelectorProvider } from '../arcSelectorProvider'
+import { SunburstItemTreeNode } from '../../../Types'
 
 describe('arcSelectorProvider', () => {
   describe('getAll', () => {
@@ -18,7 +19,7 @@ describe('arcSelectorProvider', () => {
   describe('get', () => {
     it('should return the correct selector to select a specific path by its id', () => {
       // Arrange
-      const item = { id: 1 }
+      const item = mock<SunburstItemTreeNode>({ id: 1 })
       const expectedSelector = `.arc>path[data-id="${item.id}"]`
 
       // Act

@@ -1,5 +1,3 @@
-//@ts-nocheck
-
 import { addToNodeRecursively } from "../addToNodeRecursively"
 import { KNode } from "../KNode"
 
@@ -14,7 +12,9 @@ describe('addToNodeRecursively', () => {
 
     it('should set the data property of the node if there are no more segments', () => {
         // Arrange
-        const nameIterator = { next: jest.fn(() => ({ done: true })) }
+        const nameIterator: IterableIterator<string> = {
+            next: jest.fn(() => ({ done: true, value: "" } as IteratorResult<string>)), [Symbol.iterator]: () => { return nameIterator }
+        }
         const data = { name: 'item1' }
 
         // Act
@@ -27,7 +27,9 @@ describe('addToNodeRecursively', () => {
     it('should create a child node and add it to the parent node if it does not exist', () => {
         const nextFn = jest.fn(() => ({ done: false, value: 'segment1' })).mockReturnValueOnce(({ done: false, value: 'segment1' })).mockReturnValueOnce(({ done: true, value: 'segment2' }))
         // Arrange
-        const nameIterator = { next: nextFn }
+        const nameIterator = {
+            next: nextFn, [Symbol.iterator]: () => { return nameIterator }
+        }
         const data = { name: 'item1' }
 
         // Act

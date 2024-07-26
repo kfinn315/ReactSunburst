@@ -1,10 +1,6 @@
 /* eslint-disable */
-// @ts-nocheck
 import { HierarchyNode } from 'd3'
-import {
-    ElementListProvider,
-    Highlighter,
-} from '../Types'
+import { ElementListProvider, Highlighter, } from '../Types'
 import getHighlighter from '../getHighlighter'
 
 describe('getHighlighter', () => {
@@ -25,8 +21,8 @@ describe('getHighlighter', () => {
 
     describe('clear', () => {
         it('should remove the "highlight" class from all elements', () => {
-            const elements = [document.createElement('div'), document.createElement('span')]
-            elementProvider.getAll.mockReturnValue(elements)
+            const elements = [document.createElement('div'), document.createElement('span')];
+            (elementProvider.getAll as jest.Mock).mockReturnValue(elements)
 
             highlighter.clear()
 
@@ -40,8 +36,8 @@ describe('getHighlighter', () => {
     describe('highlight', () => {
         it('should add the "highlight" class to the specified hierarchyNode elements', () => {
             const hierarchyNode = {} as HierarchyNode<any>
-            const elements = [document.createElement('div'), document.createElement('span')]
-            elementProvider.get.mockReturnValue(elements)
+            const elements = [document.createElement('div'), document.createElement('span')];
+            (elementProvider.get as jest.Mock).mockReturnValue(elements)
 
             highlighter.highlight(hierarchyNode)
 

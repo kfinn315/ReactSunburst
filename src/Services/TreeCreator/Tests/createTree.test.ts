@@ -1,17 +1,15 @@
-//@ts-nocheck
-
 import { KNode } from '../KNode'
 import { addToNodeRecursively } from '../addToNodeRecursively'
+
 jest.mock("../addToNodeRecursively")
 import createTree from '../createTree'
-// import { getIDGenerator } from './getIDGenerator'
 
 type T = { name: string, segments: string[] }
 
 describe('createTree', () => {
     let rootNode: KNode<unknown>
     let items: T[]
-    let getSegmentIterator: jest.Mock<IterableIterator<string>, [item: unknown]>
+    let getSegmentIterator = jest.fn()
 
     beforeEach(() => {
         rootNode = new KNode<T>(0, 'root')

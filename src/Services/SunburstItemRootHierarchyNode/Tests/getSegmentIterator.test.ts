@@ -1,4 +1,3 @@
-//@ts-nocheck
 
 import { SunburstItem } from "../../../Types"
 import { getSegmentIterator } from "../getSegmentIterator"
@@ -8,6 +7,9 @@ describe('getSegmentIterator', () => {
         // Arrange
         const item: SunburstItem = {
             name: 'segment1.segment2.segment3',
+            color: 0,
+            id: 0,
+            size: 0
         }
 
         // Act
@@ -21,6 +23,9 @@ describe('getSegmentIterator', () => {
         // Arrange
         const item: SunburstItem = {
             name: 'segment1',
+            color: 0,
+            id: 0,
+            size: 0
         }
 
         // Act
