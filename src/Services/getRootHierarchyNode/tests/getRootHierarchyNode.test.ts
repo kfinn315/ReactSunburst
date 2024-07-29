@@ -6,17 +6,13 @@ import { mock } from "jest-mock-extended";
 type T = { name: string }
 
 describe("getRootHierarchyNode", () => {
-    // Define test data
     const items: T[] = [{ name: 'a' }, { name: 'b' }, { name: 'c' }];
 
-    // Mock functions for createTree and getHierarchyNode
     const createTree = jest.fn(() => {
-        /* Mock implementation for createTree */
         return mock<TreeNode<T>>()
     });
 
     const getHierarchyNode = jest.fn(() => {
-        /* Mock implementation for getHierarchyNode */
         return mock<HierarchyNode<TreeNode<T>>>()
     });
 
@@ -25,28 +21,36 @@ describe("getRootHierarchyNode", () => {
     });
 
     it("should call createTree with the correct items", () => {
+        // Act
         getRootHierarchyNode(items, createTree, getHierarchyNode);
 
+        // Assert
         expect(createTree).toHaveBeenCalledTimes(1);
         expect(createTree).toHaveBeenCalledWith(items);
     });
 
     it("should call getHierarchyNode with the root node returned by createTree", () => {
+        // Arrange
         const rootNode: TreeNode<T> = mock<TreeNode<T>>()
         createTree.mockReturnValueOnce(rootNode);
 
+        // Act
         getRootHierarchyNode(items, createTree, getHierarchyNode);
 
+        // Assert
         expect(getHierarchyNode).toHaveBeenCalledTimes(1);
         expect(getHierarchyNode).toHaveBeenCalledWith(rootNode);
     });
 
     it("should return the result of getHierarchyNode", () => {
+        // Arrange
         const hierarchyNode = mock<HierarchyNode<TreeNode<T>>>()
         getHierarchyNode.mockReturnValueOnce(hierarchyNode);
 
+        // Act
         const result = getRootHierarchyNode(items, createTree, getHierarchyNode);
 
+        // Assert
         expect(result).toBe(hierarchyNode);
     });
 });

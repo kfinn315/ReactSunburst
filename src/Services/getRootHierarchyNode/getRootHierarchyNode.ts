@@ -1,11 +1,10 @@
 import { HierarchyNode } from "d3";
 import { TreeNode } from "../TreeCreator";
+import { GetTreeNodeHierarchy } from "./Types";
 
-export function getRootHierarchyNode<T>(
-  items: readonly T[],
-  createTree: (items: readonly T[]) => TreeNode<T>,
-  getHierarchyNode: (root: TreeNode<T>) => HierarchyNode<TreeNode<T>>,
+type CreateTreeMethod<T> = (items: readonly T[]) => TreeNode<T>
+
+export function getRootHierarchyNode<T>(items: readonly T[], createTree: CreateTreeMethod<T>, getHierarchyNode: GetTreeNodeHierarchy<T>,
 ): HierarchyNode<TreeNode<T>> {
-  const root = createTree(items);
-  return getHierarchyNode(root);
+  return getHierarchyNode(createTree(items));
 }

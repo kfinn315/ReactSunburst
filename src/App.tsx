@@ -4,9 +4,8 @@ import { JSONTree } from 'react-json-tree'
 
 import { SunburstContainer } from './Components/SunburstContainer'
 import { flatData } from './data'
-import { getSunburstHighlighterMethod } from './Services/SunburstHighlighter'
+import { SunburstHighlighter } from './Services/SunburstHighlighter'
 import { getRootHierarchyNodeForFlatData } from './Services/SunburstItemRootHierarchyNode'
-import { HighlighterWrapper } from './Services/Highlighter/HighlighterWrapper'
 import { getColorScale } from './Utils/getColorScale'
 
 function App() {
@@ -30,7 +29,7 @@ function App() {
             </div>
             <SunburstContainer
                 dimensions={{ width: svgDimension, height: svgDimension }}
-                highlighter={new HighlighterWrapper(getSunburstHighlighterMethod)}
+                highlighter={new SunburstHighlighter()}
                 rootNode={rootHierarchyNode}
                 colorScale={colorScale}
                 centerColor={centerColor}

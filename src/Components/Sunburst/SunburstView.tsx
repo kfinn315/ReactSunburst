@@ -7,7 +7,7 @@ import { ArcGroup, Arcs } from '../../Services/Arcs'
 import { TreeNode } from '../../Services/TreeCreator'
 import { SunburstViewController } from './SunburstViewController'
 import { SunburstEvent } from './Types'
-import { HighlighterWrapper } from '../../Services/Highlighter'
+import { IHighlighterWrapper } from '../../Services/Highlighter'
 
 export interface SunburstViewProps<TDatum> {
   radius: number
@@ -19,7 +19,7 @@ export interface SunburstViewProps<TDatum> {
   onMouseEnter?: SunburstEvent<TreeNode<TDatum>>
   onMouseLeave?: SunburstEvent<TreeNode<TDatum>>
   centerElement?: JSX.Element
-  highlighter?: HighlighterWrapper<TDatum>
+  highlighter?: IHighlighterWrapper<TDatum>
 }
 
 export default function SunburstView<TDatum>(

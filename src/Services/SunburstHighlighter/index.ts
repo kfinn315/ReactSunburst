@@ -1,4 +1,4 @@
-import { getSunburstHighlighterMethod } from './getSunburstHighlighterMethod'
-import { GetHighlighterMethod } from './Types'
+import { GetHighlighter } from './Types'
+import { SunburstHighlighter } from './SunburstHighlighter';
 
-export { getSunburstHighlighterMethod, type GetHighlighterMethod }
+export { SunburstHighlighter, type GetHighlighter }

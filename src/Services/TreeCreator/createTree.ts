@@ -2,9 +2,7 @@ import { addToNodeRecursively } from './addToNodeRecursively'
 import { KNode } from './KNode'
 import { getIDGenerator } from './getIDGenerator'
 import { TreeNode } from './Types'
-import { GetSegmentIteratorMethod } from '../SunburstItemRootHierarchyNode/getSegmentIterator';
-
-export type CreateTreeMethod<T> = (items: readonly T[], getSegmentIterator: GetSegmentIteratorMethod<T>) => TreeNode<T>
+import { GetSegmentIterator } from "./GetSegmentIterator";
 
 /**
  * Create a tree data structure by adding TData items to a root node
@@ -13,7 +11,7 @@ export type CreateTreeMethod<T> = (items: readonly T[], getSegmentIterator: GetS
  */
 export default function createTree<TData>(
   items: readonly TData[],
-  getSegmentIterator: GetSegmentIteratorMethod<TData>
+  getSegmentIterator: GetSegmentIterator<TData>
 ): TreeNode<TData> {
   const idGenerator = getIDGenerator()
 

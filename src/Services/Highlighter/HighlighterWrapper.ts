@@ -1,16 +1,14 @@
 import { HierarchyNode } from 'd3'
 import { MutableRefObject } from 'react'
-import { GetHighlighterMethod } from '../SunburstHighlighter'
+import { GetHighlighter } from '../SunburstHighlighter'
 import { TreeNode } from '../TreeCreator'
-import { Highlighter } from './Types'
+import { Highlighter, IHighlighterWrapper } from './Types'
 
-export class HighlighterWrapper<TData>
-  implements Highlighter<HierarchyNode<TreeNode<TData>>>
-{
+export class HighlighterWrapper<TData> implements IHighlighterWrapper<TData> {
   private highlighter: Highlighter<HierarchyNode<TreeNode<TData>>> | undefined =
     undefined
 
-  constructor(private readonly getHighlighter: GetHighlighterMethod<TData>) {}
+  constructor(private readonly getHighlighter: GetHighlighter<TData>) { }
 
   setRef(ref: MutableRefObject<SVGGElement | null>) {
     this.highlighter = this.getHighlighter(ref)

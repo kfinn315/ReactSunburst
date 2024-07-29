@@ -1,4 +1,4 @@
-import { getSunburstItemRootHierarchyNode } from './getRootHierarchyNode';
+import { getRootHierarchyNode } from './getRootHierarchyNode';
 
 
-export { getSunburstItemRootHierarchyNode as getRootHierarchyNodeForFlatData }
+export { getRootHierarchyNode as getRootHierarchyNodeForFlatData }

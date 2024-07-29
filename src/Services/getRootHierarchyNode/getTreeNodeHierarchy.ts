@@ -1,15 +1,8 @@
 import { hierarchy, HierarchyNode } from 'd3'
 
 import { TreeNode } from '../TreeCreator'
+import { getChildren } from './getChildren'
 
-export type GetTreeNodeHierarchyMethod<TData> = (root: TreeNode<TData>) => HierarchyNode<TreeNode<TData>>
-
-function getChildren<TData>(treeNode: TreeNode<TData>) {
-  return treeNode.children
-}
-
-export function getTreeNodeHierarchy<TData>(
-  root: TreeNode<TData>,
-): HierarchyNode<TreeNode<TData>> {
+export function getTreeNodeHierarchy<TData>(root: TreeNode<TData>,): HierarchyNode<TreeNode<TData>> {
   return hierarchy(root, getChildren)
 }

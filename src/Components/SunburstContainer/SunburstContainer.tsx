@@ -8,7 +8,7 @@ import { getPartitionTreeLayout } from '../../Services/PartitionLayout'
 import { TreeNode } from '../../Services/TreeCreator'
 import { BoxDimensions } from '../../Types/BoxDimensions'
 import { Sunburst, SunburstEvent } from '../Sunburst'
-import { HighlighterWrapper } from '../../Services/Highlighter/HighlighterWrapper'
+import { IHighlighterWrapper } from '../../Services/Highlighter'
 
 export interface SunburstContainerProps {
   dimensions: BoxDimensions
@@ -18,7 +18,7 @@ export interface SunburstContainerProps {
   onClick?: SunburstEvent<SunburstItemTreeNode>
   onMouseEnter?: SunburstEvent<SunburstItemTreeNode>
   onMouseLeave?: SunburstEvent<SunburstItemTreeNode>
-  highlighter?: HighlighterWrapper<SunburstItem>
+  highlighter?: IHighlighterWrapper<SunburstItem>
   colorScale: ScaleLinear<string, string>
   centerColor: string
 }

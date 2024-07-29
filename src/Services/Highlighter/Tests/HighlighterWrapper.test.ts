@@ -1,5 +1,5 @@
 import { HierarchyNode } from "d3"
-import { GetHighlighterMethod } from "../../SunburstHighlighter"
+import { GetHighlighter } from "../../SunburstHighlighter"
 import { HighlighterWrapper } from "../HighlighterWrapper"
 import { TreeNode } from "../../TreeCreator"
 import { MutableRefObject } from "react"
@@ -48,7 +48,7 @@ describe('HighlighterWrapper', () => {
         it('should log a message if setRef has not been called', () => {
             // Arrange
             console.info = jest.fn()
-            const getHighlighter: GetHighlighterMethod<unknown> = jest.fn()
+            const getHighlighter: GetHighlighter<unknown> = jest.fn()
             const highlighterWrapper = new HighlighterWrapper<unknown>(getHighlighter)
 
             // Act
@@ -69,7 +69,7 @@ describe('HighlighterWrapper', () => {
                 clear: jest.fn(),
                 highlight: jest.fn(),
             }
-            const getHighlighter: GetHighlighterMethod<unknown> = jest.fn().mockReturnValueOnce(highlighter)
+            const getHighlighter: GetHighlighter<unknown> = jest.fn().mockReturnValueOnce(highlighter)
             const highlighterWrapper = new HighlighterWrapper<unknown>(getHighlighter)
             highlighterWrapper.setRef(ref)
 
@@ -84,7 +84,7 @@ describe('HighlighterWrapper', () => {
             // Arrange
             console.info = jest.fn()
             const item = mock<HierarchyNode<TreeNode<unknown>>>()
-            const getHighlighter: GetHighlighterMethod<unknown> = jest.fn()
+            const getHighlighter: GetHighlighter<unknown> = jest.fn()
             const highlighterWrapper = new HighlighterWrapper<unknown>(getHighlighter)
 
             // Act

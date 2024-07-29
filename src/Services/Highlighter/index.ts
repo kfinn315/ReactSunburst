@@ -1,5 +1,5 @@
 import getHighlighter from './getHighlighter'
-import { Highlighter, ElementListProvider } from './Types'
+import { Highlighter, ElementListProvider, IHighlighterWrapper } from './Types';
 import { HighlighterWrapper } from './HighlighterWrapper'
 
 export {
@@ -7,4 +7,5 @@ export {
   type Highlighter,
   type ElementListProvider,
   HighlighterWrapper,
+  type IHighlighterWrapper,
 }

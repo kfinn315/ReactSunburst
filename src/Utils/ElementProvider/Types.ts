@@ -1,6 +1,6 @@
 export interface IElementProvider<TDatum, TElement extends Element = Element> {
   get: (item: TDatum) => TElement | null
-  getAll: () => TElement[]
+  getAll: () => TElement[] | null
 }
 
 export interface SelectorProvider<TDatum> {

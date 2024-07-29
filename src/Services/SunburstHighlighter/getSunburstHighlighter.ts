@@ -5,17 +5,15 @@ import { getHighlighter, Highlighter } from '../Highlighter'
 import { TreeNode } from '../TreeCreator'
 import { getAncestorElementListProvider } from './getAncestorElementListProvider'
 import { getArcElementProvider } from './getArcElementProvider'
-import { GetHighlighterMethod } from './Types'
+import { GetHighlighter } from './Types'
 
-export const getSunburstHighlighterMethod: GetHighlighterMethod<SunburstItem> = (
+export const getSunburstHighlighter: GetHighlighter<SunburstItem> = (
   gElementRef: React.MutableRefObject<SVGGElement | null>,
 ): Highlighter<HierarchyNode<TreeNode<SunburstItem>>> => {
   const arcElementProvider = getArcElementProvider(gElementRef)
 
-  const elementProvider = getAncestorElementListProvider<
-    TreeNode<SunburstItem>,
-    SVGGElement
-  >(arcElementProvider)
+  const elementProvider = getAncestorElementListProvider<TreeNode<SunburstItem>, SVGGElement>(arcElementProvider)
 
   return getHighlighter<SunburstItemTreeNode>(elementProvider)
 }
+

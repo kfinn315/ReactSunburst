@@ -19,7 +19,7 @@ export class SunburstViewController<TNode> {
   constructor(
     private readonly ref: MutableRefObject<SVGGElement | null>,
     private readonly props: SunburstViewControllerProps<TNode>,
-  ) {}
+  ) { }
 
   /**
    * Initializes and updates the sunburst chart based on the provided items data
@@ -40,12 +40,12 @@ export class SunburstViewController<TNode> {
       return
     }
 
-    const selection = select<SVGGElement, HierarchyRectangularNode<TNode>>(
+    const view = select<SVGGElement, HierarchyRectangularNode<TNode>>(
       this.ref.current,
     )
 
     const createArcs = () => {
-      const arcGroup = selection.select('.arc')
+      const arcGroup = view.select('.arc')
 
       const arcs = arcGroup
         .selectAll<SVGPathElement, HierarchyRectangularNode<TNode>>('path')
@@ -66,11 +66,10 @@ export class SunburstViewController<TNode> {
 
     const createMouseArcs = () => {
       // Mouse pointer events group //
-      const mouseGroup = selection
+      const mouseGroup = view
         .select('.mousearc')
         .attr('fill', 'none')
         .attr('pointer-events', 'all')
-      // .on('mouseleave', onMouseLeave)
 
       const mousearcs = mouseGroup
         .selectAll<SVGPathElement, HierarchyRectangularNode<TNode>>('path')

@@ -1,3 +1,7 @@
+import { HierarchyNode } from "d3";
+import { TreeNode } from "../TreeCreator";
+import { MutableRefObject } from "react";
+
 /**
  * Highlighter methods
  */
@@ -16,3 +20,7 @@ export interface ElementListProvider<
   get: (item: TInput) => TElement[]
   getAll: () => TElement[]
 }
+
+export type IHighlighterWrapper<TData> = Highlighter<HierarchyNode<TreeNode<TData>>> & {
+  setRef(ref: MutableRefObject<SVGGElement | null>): void;
+};

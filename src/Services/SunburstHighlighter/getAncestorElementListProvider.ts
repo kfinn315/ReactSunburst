@@ -5,32 +5,23 @@ import { getHierarchyNodeAncestors } from '../../Utils/getHierarchyNodeAncestors
 import { isNotNull } from '../../Utils/isNotNull'
 import { ElementListProvider } from '../Highlighter'
 
-function getAncestorNodeData<T>(hierarchyNode: HierarchyNode<T>) {
+export function getElements<Datum, TElement extends Element>(provider: IElementProvider<Datum, TElement>, items: Datum[]): TElement[] {
+  return items.map(provider.get).filter(x => isNotNull(x)).map(x => x as TElement)
+}
+
+export function getAncestorNodeData<T>(hierarchyNode: HierarchyNode<T>) {
   return getHierarchyNodeAncestors(hierarchyNode).map(hierarchyNode => hierarchyNode.data)
 }
 
-function getElements<Datum, TElement extends Element>(provider: IElementProvider<Datum, TElement>, items: Datum[]): TElement[] {
-  return items
-    .map((item) => provider.get(item))
-    .filter((element) => isNotNull(element)) as TElement[]
-}
-
-export function getAncestorElementListProvider<
-  TDatum,
-  TElement extends Element = Element,
->(
+export function getAncestorElementListProvider<TDatum, TElement extends Element = Element,>(
   elementProvider: IElementProvider<TDatum, TElement>,
 ): ElementListProvider<HierarchyNode<TDatum>, TElement> {
-
-
   return {
     get(hierarchyNode: HierarchyNode<TDatum>): TElement[] {
-      const ancestors = getAncestorNodeData(hierarchyNode)
-
-      return getElements(elementProvider, ancestors)
+      return getElements(elementProvider, getAncestorNodeData(hierarchyNode))
     },
     getAll(): TElement[] {
-      return elementProvider.getAll()
+      return elementProvider.getAll() ?? []
     },
   }
 }
