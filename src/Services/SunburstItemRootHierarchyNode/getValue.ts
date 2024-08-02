@@ -1,5 +1,5 @@
 import { SunburstItem } from "../../Types";
-import { TreeNode } from "../TreeCreator";
+import { TreeNode } from "../Tree";
 
 
 export function getValue(d: TreeNode<SunburstItem>): number {

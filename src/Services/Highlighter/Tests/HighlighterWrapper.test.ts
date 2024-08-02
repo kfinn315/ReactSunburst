@@ -1,7 +1,7 @@
 import { HierarchyNode } from "d3"
 import { GetHighlighter } from "../../SunburstHighlighter"
 import { HighlighterWrapper } from "../HighlighterWrapper"
-import { TreeNode } from "../../TreeCreator"
+import { TreeNode } from "../../Tree"
 import { MutableRefObject } from "react"
 import { Highlighter } from "../Types"
 import { mock } from "jest-mock-extended"

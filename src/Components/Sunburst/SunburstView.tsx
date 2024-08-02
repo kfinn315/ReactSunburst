@@ -4,7 +4,7 @@ import { HierarchyNode, HierarchyRectangularNode } from 'd3'
 import { useLayoutEffect, useMemo, useRef } from 'react'
 
 import { ArcGroup, Arcs } from '../../Services/Arcs'
-import { TreeNode } from '../../Services/TreeCreator'
+import { TreeNode } from '../../Services/Tree'
 import { SunburstViewController } from './SunburstViewController'
 import { SunburstEvent } from './Types'
 import { IHighlighterWrapper } from '../../Services/Highlighter'

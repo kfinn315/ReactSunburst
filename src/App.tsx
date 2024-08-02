@@ -2,29 +2,27 @@ import './App.css'
 
 import { JSONTree } from 'react-json-tree'
 
-import { SunburstContainer } from './Components/SunburstContainer'
 import { flatData } from './data'
-import { SunburstHighlighter } from './Services/SunburstHighlighter'
-import { getRootHierarchyNodeForFlatData } from './Services/SunburstItemRootHierarchyNode'
+import { getRootHierarchyNode as getRootHierarchyNodeForSunburstItems } from './Services/SunburstItemRootHierarchyNode'
 import { getColorScale } from './Utils/getColorScale'
+import { HierarchyNode } from 'd3'
+import { SunburstContainer, SunburstItem, SunburstHighlighter, TreeNode } from 'kfinn315_sunburst';
 
 function App() {
     const centerColor = 'blue'
-
     const colorGradient: [string, string] = ['blue', 'red']
     const colorScale = getColorScale(flatData, colorGradient)
-
     const svgDimension = 1400
-
-    const rootHierarchyNode = getRootHierarchyNodeForFlatData(flatData)
-
+    const rootHierarchyNode: HierarchyNode<TreeNode<SunburstItem>> = getRootHierarchyNodeForSunburstItems(flatData)
     return (
         <div className="content">
             <div className="description">
                 <p>
-                    The below is a demonstration of the React Sunburst component, written
-                    using React JS and D3.js, that I wrote to practice code organization
-                    and structure.
+                    Here is a demonstration of the React Sunburst component that I wrote to practice code organization
+                    and structure. It uses React JS and D3.js.
+                </p>
+                <p>
+                    The input must be an object of type <code>HierarchyNode&lt;TreeNode&lt;SunburstItem&gt;&gt;</code>
                 </p>
             </div>
             <SunburstContainer

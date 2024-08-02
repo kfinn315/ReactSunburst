@@ -2,7 +2,7 @@ import { HierarchyNode } from 'd3'
 
 import { SunburstItem, SunburstItemTreeNode } from '../../Types'
 import { getHighlighter, Highlighter } from '../Highlighter'
-import { TreeNode } from '../TreeCreator'
+import { TreeNode } from '../Tree'
 import { getAncestorElementListProvider } from './getAncestorElementListProvider'
 import { getArcElementProvider } from './getArcElementProvider'
 import { GetHighlighter } from './Types'

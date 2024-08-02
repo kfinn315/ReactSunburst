@@ -1,5 +1,5 @@
 import { mock } from 'jest-mock-extended';
-import { TreeNode } from '../../TreeCreator/Types';
+import { TreeNode } from '../../Tree/Types';
 import { getChildren } from '../getChildren';
 
 describe('getChildren', () => {

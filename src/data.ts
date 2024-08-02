@@ -1,4 +1,4 @@
-import { SunburstItem, SunburstItemNode } from './Types'
+import { SunburstItem, SunburstItemNode } from 'kfinn315_sunburst'
 
 export const flatData: readonly SunburstItem[] = [
   { id: 0, name: '1', color: 0, size: 200 },

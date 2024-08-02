@@ -1,5 +1,5 @@
 import { SunburstItem } from "../../Types";
-import { createTree } from "../TreeCreator";
+import { createTree } from "../Tree";
 import { getSegmentIterator } from "./getSegmentIterator";
 
 

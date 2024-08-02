@@ -5,7 +5,7 @@ import { useState } from 'react'
 
 import { SunburstItem, SunburstItemTreeNode } from '../../Types'
 import { getPartitionTreeLayout } from '../../Services/PartitionLayout'
-import { TreeNode } from '../../Services/TreeCreator'
+import { TreeNode } from '../../Services/Tree'
 import { BoxDimensions } from '../../Types/BoxDimensions'
 import { Sunburst, SunburstEvent } from '../Sunburst'
 import { IHighlighterWrapper } from '../../Services/Highlighter'

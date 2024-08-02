@@ -1,7 +1,7 @@
 import { HierarchyNode } from 'd3'
 import { MutableRefObject } from 'react'
 import { GetHighlighter } from '../SunburstHighlighter'
-import { TreeNode } from '../TreeCreator'
+import { TreeNode } from '../Tree'
 import { Highlighter, IHighlighterWrapper } from './Types'
 
 export class HighlighterWrapper<TData> implements IHighlighterWrapper<TData> {

@@ -5,7 +5,7 @@ import {
 } from 'd3'
 
 import { BoxDimensions } from '../../Types'
-import { TreeNode } from '../TreeCreator'
+import { TreeNode } from '../Tree'
 
 export function getPartitionTreeLayout<TData>(
   rootHierarchyNode: HierarchyNode<TreeNode<TData>>,

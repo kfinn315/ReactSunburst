@@ -1,5 +1,5 @@
 import { HierarchyNode } from "d3";
-import { TreeNode } from "../TreeCreator";
+import { TreeNode } from "../Tree";
 import { GetTreeNodeHierarchy } from "./Types";
 
 interface getHierarchyNodeProps<T> {

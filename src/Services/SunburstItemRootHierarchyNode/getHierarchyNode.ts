@@ -1,6 +1,6 @@
 import { SunburstItem } from "../../Types";
-import { getHierarchyNode as baseGetHierarchyNode, getTreeNodeHierarchy } from "../getRootHierarchyNode";
-import { TreeNode } from "../TreeCreator";
+import { getHierarchyNode as baseGetHierarchyNode, getTreeNodeHierarchy } from "../RootHierarchyNode";
+import { TreeNode } from "../Tree";
 import { getValue } from "./getValue";
 import { compare } from "./compare";
 import { HierarchyNode } from "d3";

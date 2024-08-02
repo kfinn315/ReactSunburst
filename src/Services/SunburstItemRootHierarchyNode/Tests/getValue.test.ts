@@ -1,6 +1,6 @@
 import { mock } from "jest-mock-extended"
 import { SunburstItem } from "../../../Types"
-import { TreeNode } from "../../TreeCreator"
+import { TreeNode } from "../../Tree"
 import { getValue } from '../getValue'
 
 describe('getValue', () => {

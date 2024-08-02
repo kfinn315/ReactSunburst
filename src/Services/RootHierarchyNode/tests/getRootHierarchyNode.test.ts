@@ -1,6 +1,6 @@
 import { HierarchyNode } from "d3";
 import { getRootHierarchyNode } from "../getRootHierarchyNode";
-import { TreeNode } from "../../TreeCreator";
+import { TreeNode } from "../../Tree";
 import { mock } from "jest-mock-extended";
 
 type T = { name: string }
