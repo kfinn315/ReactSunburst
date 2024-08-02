@@ -1,4 +1,4 @@
-import { SunburstItem } from "../../Types";
+import { SunburstItem } from "kfinn315_sunburst";
 import { TreeNode } from "../Tree";
 
 

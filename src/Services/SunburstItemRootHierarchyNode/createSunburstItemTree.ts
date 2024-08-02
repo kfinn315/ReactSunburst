@@ -1,4 +1,4 @@
-import { SunburstItem } from "../../Types";
+import { SunburstItem } from "kfinn315_sunburst";
 import { createTree } from "../Tree";
 import { getSegmentIterator } from "./getSegmentIterator";
 

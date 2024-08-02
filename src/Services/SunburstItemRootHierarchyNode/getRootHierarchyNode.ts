@@ -1,5 +1,5 @@
 
-import { SunburstItem } from "../../Types"
+import { SunburstItem } from "kfinn315_sunburst";
 import { getRootHierarchyNode as baseGetRootHierarchyNode } from "../RootHierarchyNode"
 import { getHierarchyNode } from "./getHierarchyNode"
 import { createSunburstItemTree } from "./createSunburstItemTree"

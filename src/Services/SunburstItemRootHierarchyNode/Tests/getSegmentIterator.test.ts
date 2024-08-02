@@ -1,5 +1,5 @@
 
-import { SunburstItem } from "../../../Types"
+import { SunburstItem } from "kfinn315_sunburst";
 import { getSegmentIterator } from "../getSegmentIterator"
 
 describe('getSegmentIterator', () => {

@@ -1,5 +1,5 @@
 import { mock } from "jest-mock-extended"
-import { SunburstItem } from "../../../Types"
+import { SunburstItem } from "kfinn315_sunburst";
 import { TreeNode } from "../../Tree"
 import { getValue } from '../getValue'
 

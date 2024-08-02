@@ -1,7 +1,7 @@
 import { HierarchyNode } from 'd3-hierarchy'
 import { mock } from 'jest-mock-extended'
 
-import { SunburstItemTreeNode } from "../../../Types"
+import { SunburstItemTreeNode } from "kfinn315_sunburst";
 import { getHierarchyNode } from '../getHierarchyNode'
 
 describe('getHierarchyNode', () => {
