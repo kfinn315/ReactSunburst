@@ -37,7 +37,7 @@ function DemoHierarchicalData() {
             .join('.')
     }
 
-    const factory = new AncestorHighlighterFactory<SunburstItemNode>({
+    const factory = new AncestorHighlighterFactory<SunburstItemNode, Element>({
         get: (item: SunburstItemNode) => `.arc>path[data-id="${String(item.id)}"]`,
         getAll: () => '.arc>path' //select all paths
     });
