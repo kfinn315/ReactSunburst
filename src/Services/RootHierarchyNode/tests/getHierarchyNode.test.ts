@@ -15,7 +15,9 @@ describe('getHierarchyNode', () => {
         const mockSum = jest.fn()
 
         const mockHierarchyNode = mock<HierarchyNode<SunburstItemTreeNode>>({
+            //@ts-expect-error
             sort: (compare) => { mockSort(compare); return mockHierarchyNode },
+            //@ts-expect-error
             sum: (value) => { mockSum(value); return mockHierarchyNode }
         })
 

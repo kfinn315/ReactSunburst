@@ -8,7 +8,7 @@
   "description": "Demos for the kfinn315_sunburst project",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "build": "tsc && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
     "test": "jest"
