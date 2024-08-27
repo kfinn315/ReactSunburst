@@ -1,25 +1,24 @@
-import './App.css'
+import "./FlatDataSunburst.css";
 
 import { JSONTree } from 'react-json-tree'
-
-import { flatData } from './data'
-import { getRootHierarchyNode as getRootHierarchyNodeForSunburstItems } from './Services/SunburstItemRootHierarchyNode'
-import { getColorScale } from './Utils/getColorScale'
 import { HierarchyNode } from 'd3'
-import { SunburstItem, SunburstHighlighter, TreeNode, SunburstItemSunburstContainer } from 'kfinn315_sunburst';
+import { SunburstItem, TreeNode, SunburstItemSunburstContainer, SunburstHighlighterFactory } from 'kfinn315_sunburst';
 
-function DemoFlatData() {
+import { flatData } from '../../data'
+import { getColorScale } from '../../Utils/getColorScale'
+import { getRootHierarchyNode } from '../../Services/SunburstItemRootHierarchyNode'
+
+function FlatDataSunburst() {
     const centerColor = 'blue'
     const colorGradient: [string, string] = ['blue', 'red']
     const colorScale = getColorScale(flatData, colorGradient)
     const svgDimension = 1400
-    const rootHierarchyNode: HierarchyNode<TreeNode<SunburstItem>> = getRootHierarchyNodeForSunburstItems(flatData)
+    const rootHierarchyNode: HierarchyNode<TreeNode<SunburstItem>> = getRootHierarchyNode(flatData)
     return (
-        <div className="content">
-            <h2>Flat Data Demo</h2>
+        <>
             <SunburstItemSunburstContainer
                 dimensions={{ width: svgDimension, height: svgDimension }}
-                highlighter={new SunburstHighlighter()}
+                highlighterFactory={new SunburstHighlighterFactory()}
                 rootNode={rootHierarchyNode}
                 colorScale={colorScale}
                 centerColor={centerColor}
@@ -28,8 +27,8 @@ function DemoFlatData() {
                 <h2>Data</h2>
                 <JSONTree data={flatData} />
             </div>
-        </div>
+        </>
     )
 }
 
-export default DemoFlatData
+export default FlatDataSunburst
