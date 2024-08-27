@@ -1,3 +1,4 @@
+//@ts-ignore
 import { HierarchyNode } from 'd3-hierarchy'
 import { mock } from 'jest-mock-extended'
 
@@ -14,10 +15,9 @@ describe('getHierarchyNode', () => {
         const mockSort = jest.fn()
         const mockSum = jest.fn()
 
+        //@ts-expect-error
         const mockHierarchyNode = mock<HierarchyNode<SunburstItemTreeNode>>({
-            //@ts-expect-error
             sort: (compare) => { mockSort(compare); return mockHierarchyNode },
-            //@ts-expect-error
             sum: (value) => { mockSum(value); return mockHierarchyNode }
         })
 
